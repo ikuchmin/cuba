@@ -21,6 +21,8 @@ import com.haulmont.cuba.core.global.EntityStates;
 import com.haulmont.cuba.gui.app.security.role.edit.tabs.ScreenPermissionsFrame;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.data.Datasource;
+import com.haulmont.cuba.security.entity.Access;
+import com.haulmont.cuba.security.entity.EntityAttrAccess;
 import com.haulmont.cuba.security.entity.Role;
 import com.haulmont.cuba.security.role.RolesService;
 
@@ -45,7 +47,7 @@ public class RoleEditor extends AbstractEditor<Role> {
     protected TextField name;
 
     @Inject
-    protected LookupField typeLookup;
+    protected LookupField securityScopeLookup;
 
     @Inject
     protected TextArea description;
@@ -58,6 +60,17 @@ public class RoleEditor extends AbstractEditor<Role> {
 
     @Inject
     protected RolesService rolesService;
+
+    @Override
+    protected void initNewItem(Role item) {
+        item.setDefaultScreenAccess(Access.DENY);
+        item.setDefaultEntityCreateAccess(Access.DENY);
+        item.setDefaultEntityReadAccess(Access.DENY);
+        item.setDefaultEntityUpdateAccess(Access.DENY);
+        item.setDefaultEntityDeleteAccess(Access.DENY);
+        item.setDefaultEntityAttributeAccess(EntityAttrAccess.DENY);
+        item.setDefaultSpecificAccess(Access.DENY);
+    }
 
     @Override
     protected void postInit() {
@@ -85,7 +98,7 @@ public class RoleEditor extends AbstractEditor<Role> {
         windowCommit.setVisible(false);
         windowCommitAndClose.setVisible(false);
         name.setEditable(false);
-        typeLookup.setEditable(false);
+        securityScopeLookup.setEditable(false);
         description.setEditable(false);
         locName.setEditable(false);
         defaultRole.setEditable(false);
