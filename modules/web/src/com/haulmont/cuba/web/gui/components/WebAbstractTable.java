@@ -38,6 +38,7 @@ import com.haulmont.cuba.gui.components.Window;
 import com.haulmont.cuba.gui.components.LookupComponent.LookupSelectionChangeNotifier;
 import com.haulmont.cuba.gui.components.actions.BaseAction;
 import com.haulmont.cuba.gui.components.columnmanager.ColumnManager;
+import com.haulmont.cuba.gui.components.compatibility.TableCellClickListenerWrapper;
 import com.haulmont.cuba.gui.components.data.AggregatableTableItems;
 import com.haulmont.cuba.gui.components.data.BindingState;
 import com.haulmont.cuba.gui.components.data.HasValueSource;
@@ -1332,6 +1333,7 @@ public abstract class WebAbstractTable<T extends com.vaadin.v7.ui.Table & CubaEn
     protected void removeAllClickListeners() {
         for (Column column : columnsOrder) {
             component.removeClickListener(column.getId());
+            component.removeTextClickListener(column.getId());
         }
     }
 
@@ -1373,7 +1375,8 @@ public abstract class WebAbstractTable<T extends com.vaadin.v7.ui.Table & CubaEn
                     } else {
                         if (column.getMaxTextLength() != null) {
                             addGeneratedColumnInternal(propertyPath, new AbbreviatedColumnGenerator(column, dynamicAttributesTools));
-                            setClickListener(propertyPath.toString(), new AbbreviatedCellClickListener(this, dynamicAttributesTools));
+                            setCellTextClickListener(propertyPath.toString(),
+                                    new TableCellClickListenerWrapper(new AbbreviatedCellClickListener(this, dynamicAttributesTools)));
                         }
                     }
                 }
@@ -3026,6 +3029,22 @@ public abstract class WebAbstractTable<T extends com.vaadin.v7.ui.Table & CubaEn
         checkNotNullArgument(getColumn(columnId), String.format("column with id '%s' not found", columnId));
 
         component.setClickListener(getColumn(columnId).getId(), (itemId, columnId1) -> {
+            TableItems<E> tableItems = getItems();
+            if (tableItems == null) {
+                return;
+            }
+
+            E item = tableItems.getItem(itemId);
+            CellClickEvent<E> event = new CellClickEvent<>(this, item, columnId1.toString());
+            clickListener.accept(event);
+        });
+    }
+
+    @Override
+    public void setCellTextClickListener(String columnId, Consumer<CellClickEvent<E>> clickListener) {
+        checkNotNullArgument(getColumn(columnId), String.format("column with id '%s' not found", columnId));
+
+        component.setTextClickListener(getColumn(columnId).getId(), (itemId, columnId1) -> {
             TableItems<E> tableItems = getItems();
             if (tableItems == null) {
                 return;

@@ -86,6 +86,10 @@ public interface CubaEnhancedTable extends AggregationContainer {
     void setClickListener(Object propertyId, CellClickListener clickListener);
     void removeClickListener(Object propertyId);
 
+    void setTextClickListener(Object propertyId, CellClickListener clickListener);
+
+    void removeTextClickListener(Object propertyId);
+
     void showCustomPopup(Component popupComponent);
 
     boolean getCustomPopupAutoClose();

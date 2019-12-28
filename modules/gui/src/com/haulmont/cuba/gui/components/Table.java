@@ -669,9 +669,22 @@ public interface Table<E extends Entity>
      * You can use .cuba-table-clickable-cell for CSS rules to specify custom representation of cell value.
      *
      * @param columnId id of column
-     * @param clickListener click listener
+     * @param clickListener cell click listener
      */
     void setCellClickListener(String columnId, Consumer<CellClickEvent<E>> clickListener);
+
+    /**
+     * Add lightweight click handler for text in column cells.<br>
+     * Web specific: cell value will be wrapped in span with cuba-table-clickable-cell style name.<br>
+     * You can use .cuba-table-clickable-cell for CSS rules to specify custom representation of cell value.
+     * <p>
+     * You cannot use cellTextClickListener for column with maxTextLength attribute, since cellTextClickListener is
+     * already installed to display abbreviated cell text.
+     *
+     * @param columnId id of column
+     * @param clickListener cell text click listener
+     */
+    void setCellTextClickListener(String columnId, Consumer<CellClickEvent<E>> clickListener);
 
     /**
      * Remove click listener.

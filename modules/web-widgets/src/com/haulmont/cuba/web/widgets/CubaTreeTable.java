@@ -71,6 +71,8 @@ public class CubaTreeTable extends com.vaadin.v7.ui.TreeTable implements TreeTab
 
     protected Map<Object, CellClickListener> cellClickListeners; // lazily initialized map
 
+    protected Map<Object, CellClickListener> cellTextClickListeners; // lazily initialized map
+
     protected Map<Object, String> columnDescriptions; // lazily initialized map
 
     protected Map<Object, String> aggregationTooltips; // lazily initialized map
@@ -106,6 +108,19 @@ public class CubaTreeTable extends com.vaadin.v7.ui.TreeTable implements TreeTab
                     CellClickListener cellClickListener = cellClickListeners.get(columnId);
                     if (cellClickListener != null) {
                         cellClickListener.onClick(itemId, columnId);
+                    }
+                }
+            }
+
+            @Override
+            public void onTextClick(String columnKey, String rowKey) {
+                Object columnId = _columnIdMap().get(columnKey);
+                Object itemId = itemIdMapper.get(rowKey);
+
+                if (cellTextClickListeners != null) {
+                    CellClickListener cellTextClickListener = cellTextClickListeners.get(columnId);
+                    if (cellTextClickListener != null) {
+                        cellTextClickListener.onClick(itemId, columnId);
                     }
                 }
             }
@@ -759,6 +774,21 @@ public class CubaTreeTable extends com.vaadin.v7.ui.TreeTable implements TreeTab
     }
 
     @Override
+    public void setTextClickListener(Object propertyId, CellClickListener clickListener) {
+        if (cellTextClickListeners == null) {
+            cellTextClickListeners = new HashMap<>();
+        }
+        cellTextClickListeners.put(propertyId, clickListener);
+    }
+
+    @Override
+    public void removeTextClickListener(Object propertyId) {
+        if (cellTextClickListeners != null) {
+            cellTextClickListeners.remove(propertyId);
+        }
+    }
+
+    @Override
     public boolean getColumnSortable(Object columnId) {
         return nonSortableProperties == null || !nonSortableProperties.contains(columnId);
     }
@@ -829,6 +859,7 @@ public class CubaTreeTable extends com.vaadin.v7.ui.TreeTable implements TreeTab
         super.beforeClientResponse(initial);
 
         updateClickableColumnKeys();
+        updateClickableTextColumnKeys();
         updateColumnDescriptions();
         updateAggregatableTooltips();
         updateHtmlCaptionColumns();
@@ -881,6 +912,19 @@ public class CubaTreeTable extends com.vaadin.v7.ui.TreeTable implements TreeTab
             }
 
             getState().clickableColumnKeys = clickableColumnKeys;
+        }
+    }
+
+    protected void updateClickableTextColumnKeys() {
+        if (cellTextClickListeners != null) {
+            String[] clickableTextColumnKeys = new String[cellTextClickListeners.size()];
+            int i = 0;
+            for (Object columnId : cellTextClickListeners.keySet()) {
+                clickableTextColumnKeys[i] = _columnIdMap().key(columnId);
+                i++;
+            }
+
+            getState().clickableTextColumnKeys = clickableTextColumnKeys;
         }
     }
 

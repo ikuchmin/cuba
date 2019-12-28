@@ -65,6 +65,8 @@ public class CubaTable extends com.vaadin.v7.ui.Table implements TableSortableCo
 
     protected Map<Object, CellClickListener> cellClickListeners; // lazily initialized map
 
+    protected Map<Object, CellClickListener> cellTextClickListeners; // lazily initialized map
+
     protected Map<Object, String> columnDescriptions; // lazily initialized map
 
     protected Map<Object, String> aggregationTooltips; // lazily initialized map
@@ -101,6 +103,20 @@ public class CubaTable extends com.vaadin.v7.ui.Table implements TableSortableCo
                     CellClickListener cellClickListener = cellClickListeners.get(columnId);
                     if (cellClickListener != null) {
                         cellClickListener.onClick(itemId, columnId);
+                    }
+                }
+            }
+
+            @Override
+            public void onTextClick(String columnKey, String rowKey) {
+                Object columnId = _columnIdMap().get(columnKey);
+                Object itemId = itemIdMapper.get(rowKey);
+                // itemId could be null if rendering in process
+                // If itemId is null it causes NPE
+                if (itemId != null && cellTextClickListeners != null) {
+                    CellClickListener cellTextClickListener = cellTextClickListeners.get(columnId);
+                    if (cellTextClickListener != null) {
+                        cellTextClickListener.onClick(itemId, columnId);
                     }
                 }
             }
@@ -779,6 +795,21 @@ public class CubaTable extends com.vaadin.v7.ui.Table implements TableSortableCo
     }
 
     @Override
+    public void setTextClickListener(Object propertyId, CellClickListener clickListener) {
+        if (cellTextClickListeners == null) {
+            cellTextClickListeners = new HashMap<>();
+        }
+        cellTextClickListeners.put(propertyId, clickListener);
+    }
+
+    @Override
+    public void removeTextClickListener(Object propertyId) {
+        if (cellTextClickListeners != null) {
+            cellTextClickListeners.remove(propertyId);
+        }
+    }
+
+    @Override
     public boolean getColumnSortable(Object columnId) {
         return nonSortableProperties == null || !nonSortableProperties.contains(columnId);
     }
@@ -829,6 +860,7 @@ public class CubaTable extends com.vaadin.v7.ui.Table implements TableSortableCo
         super.beforeClientResponse(initial);
 
         updateClickableColumnKeys();
+        updateClickableTextColumnKeys();
         updateColumnDescriptions();
         updateAggregatableTooltips();
         updateHtmlCaptionColumns();
@@ -879,6 +911,19 @@ public class CubaTable extends com.vaadin.v7.ui.Table implements TableSortableCo
             }
 
             getState().clickableColumnKeys = clickableColumnKeys;
+        }
+    }
+
+    protected void updateClickableTextColumnKeys() {
+        if (cellTextClickListeners != null) {
+            String[] clickableTextColumnKeys = new String[cellTextClickListeners.size()];
+            int i = 0;
+            for (Object columnId : cellTextClickListeners.keySet()) {
+                clickableTextColumnKeys[i] = _columnIdMap().key(columnId);
+                i++;
+            }
+
+            getState().clickableTextColumnKeys = clickableTextColumnKeys;
         }
     }
 

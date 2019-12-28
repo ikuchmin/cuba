@@ -48,6 +48,8 @@ public class CubaTableState extends TableState {
 
     public String[] clickableColumnKeys;
 
+    public String[] clickableTextColumnKeys;
+
     @NoLayout
     public Map<String, String> columnDescriptions;
 

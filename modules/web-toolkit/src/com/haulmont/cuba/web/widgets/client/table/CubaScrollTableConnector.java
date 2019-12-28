@@ -118,6 +118,13 @@ public class CubaScrollTableConnector extends TableConnector {
                 getWidget()._delegate.clickableColumns = null;
             }
         }
+        if (stateChangeEvent.hasPropertyChanged("clickableTextColumnKeys")) {
+            if (getState().clickableTextColumnKeys != null) {
+                getWidget()._delegate.clickableTextColumns = new HashSet<>(Arrays.asList(getState().clickableTextColumnKeys));
+            } else {
+                getWidget()._delegate.clickableTextColumns = null;
+            }
+        }
         if (stateChangeEvent.hasPropertyChanged("customPopup")) {
             if (getState().customPopup != null) {
                 ComponentConnector customPopup = (ComponentConnector) getState().customPopup;
@@ -268,6 +275,13 @@ public class CubaScrollTableConnector extends TableConnector {
             @Override
             public void onClick(String columnKey, int rowKey) {
                 getRpcProxy(CubaTableServerRpc.class).onClick(columnKey, String.valueOf(rowKey));
+            }
+        };
+
+        getWidget()._delegate.cellTextClickListener = new TableCellClickListener() {
+            @Override
+            public void onClick(String columnKey, int rowKey) {
+                getRpcProxy(CubaTableServerRpc.class).onTextClick(columnKey, String.valueOf(rowKey));
             }
         };
 
