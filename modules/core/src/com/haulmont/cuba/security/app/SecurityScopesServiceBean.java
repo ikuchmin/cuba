@@ -35,13 +35,10 @@ public class SecurityScopesServiceBean implements SecurityScopesService {
     @Override
     public boolean isOnlyDefaultScope() {
         Collection<SecurityScope> scopes = getAvailableSecurityScopes();
-        if (scopes != null) {
-            if (scopes.size() > 1) {
-                return false;
-            }
-            SecurityScope scope = scopes.iterator().next();
-            return scope.isDefault();
+        if (scopes.size() > 1) {
+            return false;
         }
-        return true;
+        SecurityScope scope = scopes.iterator().next();
+        return scope.isDefault();
     }
 }
