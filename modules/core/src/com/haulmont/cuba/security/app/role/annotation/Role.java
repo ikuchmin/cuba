@@ -18,6 +18,7 @@ package com.haulmont.cuba.security.app.role.annotation;
 
 import com.haulmont.cuba.security.app.role.AnnotatedRoleDefinition;
 import com.haulmont.cuba.security.entity.RoleType;
+import com.haulmont.cuba.security.entity.SecurityScope;
 import com.haulmont.cuba.security.role.SecurityStorageMode;
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.stereotype.Component;
@@ -107,4 +108,9 @@ public @interface Role {
      * Determines if the role is default.
      */
     boolean isDefault() default false;
+
+    /**
+     * Determines security scope for the role.
+     */
+    String securityScope() default SecurityScope.DEFAULT_SCOPE_NAME;
 }

@@ -42,6 +42,11 @@ public abstract class AnnotatedRoleDefinition implements RoleDefinition {
     }
 
     @Override
+    public String getSecurityScope() {
+        return annotatedPermissionsBuilder.getSecurityScopeFromAnnotation(this);
+    }
+
+    @Override
     public EntityPermissions entityPermissions() {
         return annotatedPermissionsBuilder.buildEntityAccessPermissions(this);
     }

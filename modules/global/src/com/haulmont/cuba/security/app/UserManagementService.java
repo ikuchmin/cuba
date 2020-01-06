@@ -34,8 +34,6 @@ public interface UserManagementService {
 
     String NAME = "cuba_UserManagementService";
 
-    String DEFAULT_SECURITY_SCOPE = "DEFAULT";
-
     /**
      * Copy access group with all its properties and subgroups.
      *

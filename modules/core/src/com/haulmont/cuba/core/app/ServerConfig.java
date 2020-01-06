@@ -24,6 +24,8 @@ import com.haulmont.cuba.core.config.defaults.*;
 import com.haulmont.cuba.core.config.type.Factory;
 import com.haulmont.cuba.core.config.type.TokenizedStringListFactory;
 import com.haulmont.cuba.security.app.UserSessionsAPI;
+import com.haulmont.cuba.security.role.SecurityStorageMode;
+import com.haulmont.cuba.security.role.SecurityStorageModeFactory;
 
 import java.util.List;
 
@@ -336,5 +338,37 @@ public interface ServerConfig extends Config {
     @Property("cuba.disableEntityEnhancementCheck")
     boolean getDisableEntityEnhancementCheck();
 
+    /**
+     * Defines the source from which roles are used in the application. There are 2 possible values:
+     * SOURCE_CODE - only roles defined in the source code will be used;
+     * MIXED - mixed mode, both sources will be used. If there are roles with equal names in the database and in
+     * the source code, role from database will be used.
+     * Application uses mixed mode by default.
+     */
+    @Property("cuba.rolesStorageMode")
+    @Default("MIXED")
+    @Factory(factory = SecurityStorageModeFactory.class)
+    SecurityStorageMode getRolesStorageMode();
 
+    /**
+     * Defines the source from which access groups are used in the application. There are 2 possible values:
+     * SOURCE_CODE - only access groups defined in the source code will be used;
+     * MIXED - mixed mode, both sources will be used. If there are access groups with equal names in the database and in
+     * the source code, access group from database will be used.
+     * Application uses mixed mode by default.
+     */
+    @Property("cuba.accessGroupsStorageMode")
+    @Default("MIXED")
+    @Factory(factory = SecurityStorageModeFactory.class)
+    SecurityStorageMode getAccessGroupsStorageMode();
+
+    /**
+     * Represents list of all available security scopes for all client types.
+     * Allows to select security scopes from the list in a UI and
+     * associate roles with user and selected security scope
+     */
+    @Property("cuba.securityScopes")
+    @Default("GENERIC_UI")
+    @Factory(factory = TokenizedStringListFactory.class)
+    List<String> getSecurityScopes();
 }

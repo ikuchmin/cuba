@@ -17,6 +17,7 @@
 package com.haulmont.cuba.security.role;
 
 import com.haulmont.cuba.security.entity.RoleType;
+import com.haulmont.cuba.security.entity.SecurityScope;
 
 /**
  * Main interface for working with predefined roles. Regardless of how the role is created
@@ -37,5 +38,9 @@ public interface RoleDefinition extends ApplicationRole, GenericUiRole {
 
     default boolean isDefault() {
         return false;
+    }
+
+    default String getSecurityScope() {
+        return SecurityScope.DEFAULT_SCOPE_NAME;
     }
 }

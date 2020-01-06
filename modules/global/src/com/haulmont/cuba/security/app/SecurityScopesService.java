@@ -14,17 +14,22 @@
  * limitations under the License.
  */
 
-package com.haulmont.cuba.security.role;
+package com.haulmont.cuba.security.app;
 
-public enum SecurityStorageMode {
-    /**
-     * Only roles defined in the source code will be used.
-     */
-    SOURCE_CODE,
+import com.haulmont.cuba.security.entity.SecurityScope;
+
+import java.util.Collection;
+
+public interface SecurityScopesService {
+    String NAME = "cuba_SecurityScopesService";
 
     /**
-     * Mixed mode, both sources will be used. If there are roles with equal names in the database and in
-     * the source code, role from database will be used.
+     * Represents list of all available security scopes for all client types.
      */
-    MIXED
+    Collection<SecurityScope> getAvailableSecurityScopes();
+
+    /**
+     * @return true if application contains only one default scope
+     */
+    boolean isOnlyDefaultScope();
 }

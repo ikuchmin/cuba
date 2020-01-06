@@ -73,21 +73,23 @@ public class UserEntityListener implements BeforeInsertEntityListener<User>, Bef
             user.setUserRoles(new ArrayList<>());
 
         for (Map.Entry<String, Role> entry : defaultRoles.entrySet()) {
-            if (entry.getValue() != null
+            if (!entry.getValue().isPredefined()
                     && user.getUserRoles().stream().noneMatch(userRole -> entry.getValue().equals(userRole.getRole()))) {
                 UserRole userRole = metadata.create(UserRole.class);
                 userRole.setUser(user);
                 userRole.setRole(entry.getValue());
+                userRole.setSecurityScope(entry.getValue().getSecurityScope());
 
                 entityManager.persist(userRole);
                 user.getUserRoles().add(userRole);
             }
 
-            if (entry.getValue() == null
+            if (entry.getValue().isPredefined()
                     && user.getUserRoles().stream().noneMatch(userRole -> entry.getKey().equals(userRole.getRoleName()))) {
                 UserRole userRole = metadata.create(UserRole.class);
                 userRole.setUser(user);
                 userRole.setRoleName(entry.getKey());
+                userRole.setSecurityScope(entry.getValue().getSecurityScope());
 
                 entityManager.persist(userRole);
                 user.getUserRoles().add(userRole);

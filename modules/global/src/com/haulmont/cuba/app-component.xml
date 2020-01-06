@@ -58,6 +58,8 @@
         <property name="eclipselink.cache.shared.default" value="false"/>
         <property name="eclipselink.cache.coordination.protocol" value="com.haulmont.cuba.core.sys.entitycache.EntityCacheTransportManager"/>
         <property name="eclipselink.cache.coordination.propagate-asynchronously" value="false"/>
+
+        <property name="cuba.securityScopes" value="GENERIC_UI"/>
     </module>
 
     <module name="client" dependsOn="global" blocks="web,portal,desktop">
@@ -97,8 +99,6 @@
         <property name="cuba.dispatcherBaseUrl" value="http://${cuba.webHostName}:${cuba.webPort}/${cuba.webContextName}/dispatch"/>
         <property name="cuba.useLocalServiceInvocation" value="true"/>
         <property name="cuba.iconsConfig" value="com.haulmont.cuba.gui.icons.CubaIcon"/>
-
-        <property name="cuba.securityScopes" value="DEFAULT"/>
     </module>
 
     <module name="web-toolkit" dependsOn="web">

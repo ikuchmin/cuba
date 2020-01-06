@@ -68,5 +68,6 @@ public interface WebAuthConfig extends Config {
      * Security scope specifies which roles will be loaded for user session
      */
     @Property("cuba.web.securityScope")
+    @DefaultString("GENERIC_UI")
     String getSecurityScope();
 }

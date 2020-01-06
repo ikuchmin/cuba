@@ -907,20 +907,8 @@ insert into SEC_USER (ID, CREATE_TS, VERSION, LOGIN, LOGIN_LC, PASSWORD, NAME, G
 values ('a405db59-e674-4f63-8afe-269dda788fe8', now(), 0, 'anonymous', 'anonymous', null,
 'Anonymous', '0fa2b1a5-1d68-4d69-9fbd-dff348347f93', true)^
 
-insert into SEC_ROLE (ID, CREATE_TS, VERSION, NAME, ROLE_TYPE, DEFAULT_SCREEN_ACCESS, DEFAULT_ENTITY_CREATE_ACCESS, DEFAULT_ENTITY_READ_ACCESS, DEFAULT_ENTITY_UPDATE_ACCESS, DEFAULT_ENTITY_DELETE_ACCESS, DEFAULT_ENTITY_ATTRIBUTE_ACCESS, DEFAULT_SPECIFIC_ACCESS)
-values ('0c018061-b26f-4de2-a5be-dff348347f93', current_timestamp, 0, 'Administrators', 10, 1, 1, 1, 1, 1, 2, 1)^
-
-insert into SEC_ROLE (ID, CREATE_TS, VERSION, NAME, ROLE_TYPE, DEFAULT_SCREEN_ACCESS, DEFAULT_ENTITY_CREATE_ACCESS, DEFAULT_ENTITY_READ_ACCESS, DEFAULT_ENTITY_UPDATE_ACCESS, DEFAULT_ENTITY_DELETE_ACCESS, DEFAULT_ENTITY_ATTRIBUTE_ACCESS, DEFAULT_SPECIFIC_ACCESS)
-values ('cd541dd4-eeb7-cd5b-847e-d32236552fa9', current_timestamp, 0, 'Anonymous', 30, 0, 0, 0, 0, 0, null, 0)^
-
-insert into SEC_USER_ROLE (ID, CREATE_TS, VERSION, USER_ID, ROLE_ID)
-values ('c838be0a-96d0-4ef4-a7c0-dff348347f93', current_timestamp, 0, '60885987-1b61-4247-94c7-dff348347f93', '0c018061-b26f-4de2-a5be-dff348347f93')^
-
 insert into SEC_USER_ROLE (ID, CREATE_TS, VERSION, USER_ID, ROLE_NAME)
 values ('cbdddc70-1ee2-0fe4-b63a-2d92ef0b15a2', current_timestamp, 0, '60885987-1b61-4247-94c7-dff348347f93', 'Administrators')^
-
-insert into SEC_USER_ROLE (ID, CREATE_TS, VERSION, USER_ID, ROLE_ID)
-values ('f01fb532-c2f0-dc18-b86c-450cf8a8d8c5', current_timestamp, 0, 'a405db59-e674-4f63-8afe-269dda788fe8', 'cd541dd4-eeb7-cd5b-847e-d32236552fa9')^
 
 insert into SEC_USER_ROLE (ID, CREATE_TS, VERSION, USER_ID, ROLE_NAME)
 values ('a848101b-7d8a-508a-0e9c-b53af9fad211', current_timestamp, 0, 'a405db59-e674-4f63-8afe-269dda788fe8', 'Anonymous')^

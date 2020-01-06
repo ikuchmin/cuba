@@ -94,6 +94,12 @@ public class AnnotatedPermissionsBuilder {
         return annotation.name();
     }
 
+    public String getSecurityScopeFromAnnotation(RoleDefinition role) {
+        Role annotation = getPredefinedRoleAnnotationNN(role);
+
+        return annotation.securityScope();
+    }
+
     public String getDescriptionFromAnnotation(RoleDefinition role) {
         Role annotation = getPredefinedRoleAnnotationNN(role);
 

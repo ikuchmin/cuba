@@ -17,8 +17,8 @@
 package com.haulmont.cuba.security.app.role;
 
 import com.haulmont.cuba.core.EntityManager;
+import com.haulmont.cuba.core.app.ServerConfig;
 import com.haulmont.cuba.core.global.DataManager;
-import com.haulmont.cuba.core.global.GlobalConfig;
 import com.haulmont.cuba.core.global.LoadContext;
 import com.haulmont.cuba.core.global.Metadata;
 import com.haulmont.cuba.security.entity.Permission;
@@ -39,6 +39,8 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
+import static com.haulmont.cuba.security.role.SecurityStorageMode.MIXED;
+
 /**
  * Bean contains information about all predefined roles.
  * Also has a set of methods needed to support different modes of working with roles (see {@link SecurityStorageMode})
@@ -57,7 +59,7 @@ public class RolesRepository {
     protected DataManager dataManager;
 
     @Inject
-    protected GlobalConfig config;
+    protected ServerConfig serverConfig;
 
     @Inject
     protected Logger log;
@@ -87,23 +89,18 @@ public class RolesRepository {
                 .filter(ur -> ur.getRoleDefinition() != null)
                 .forEach(ur -> result.put(ur.getRoleDefinition().getName(), ur.getRoleDefinition()));
 
-        if (isPredefinedRolesModeAvailable()) {
-            for (UserRole ur : userRolesWithRoleName) {
-                RoleDefinition role = getRoleDefinitionByName(ur.getRoleName());
-                if (role != null) {
-                    ur.setRoleDefinition(role);
-                    result.put(role.getName(), role);
-                }
+        for (UserRole ur : userRolesWithRoleName) {
+            RoleDefinition role = getRoleDefinitionByName(ur.getRoleName());
+            if (role != null) {
+                ur.setRoleDefinition(role);
+                result.put(role.getName(), role);
             }
         }
 
-        if (isDatabaseModeAvailable()) {
+        if (serverConfig.getRolesStorageMode() == MIXED) {
             for (UserRole ur : userRolesWithRoleObject) {
                 Role role = ur.getRole();
-                if (isPredefinedRolesModeAvailable()
-                        && nameToPredefinedRoleMapping.containsKey(role.getName())
-                        && !AdministratorsRoleDefinition.ROLE_NAME.equals(role.getName())
-                        && !AnonymousRoleDefinition.ROLE_NAME.equals(role.getName())) {
+                if (nameToPredefinedRoleMapping.containsKey(role.getName())) {
                     log.warn("User '{}' has link to the persisted role '{}', but this role name is used for some predefined role. " +
                             "Persisted role's permissions will not be taken into account.", ur.getUser().getLogin(), role.getName());
                     continue;
@@ -134,15 +131,13 @@ public class RolesRepository {
 
         Map<String, Role> defaultUserRoles = new HashMap<>();
 
-        if (isPredefinedRolesModeAvailable()) {
-            for (Map.Entry<String, RoleDefinition> entry : nameToPredefinedRoleMapping.entrySet()) {
-                if (entry.getValue().isDefault()) {
-                    defaultUserRoles.put(entry.getKey(), null);
-                }
+        for (Map.Entry<String, RoleDefinition> entry : nameToPredefinedRoleMapping.entrySet()) {
+            if (entry.getValue().isDefault()) {
+                defaultUserRoles.put(entry.getKey(), getRoleWithoutPermissions(entry.getValue()));
             }
         }
 
-        if (isDatabaseModeAvailable()) {
+        if (serverConfig.getRolesStorageMode() == MIXED) {
             List<Role> defaultRoles;
             String defaultRolesSql = "select r from sec$Role r where r.defaultRole = true";
             if (em != null) {
@@ -191,6 +186,7 @@ public class RolesRepository {
         role.setDescription(roleDefinition.getDescription());
         role.setType(roleDefinition.getRoleType());
         role.setDefaultRole(roleDefinition.isDefault());
+        role.setSecurityScope(roleDefinition.getSecurityScope());
 
         return role;
     }
@@ -238,24 +234,6 @@ public class RolesRepository {
         }
 
         return transformPermissions(permissionType, permissions, getRoleWithoutPermissions(roleDefinition));
-    }
-
-    public boolean isDatabaseModeAvailable() {
-        SecurityStorageMode valueFromConfig = config.getRolesStorageMode();
-        if (valueFromConfig == null) {
-            return true;
-        }
-
-        return SecurityStorageMode.DATABASE.equals(valueFromConfig) || SecurityStorageMode.MIXED.equals(valueFromConfig);
-    }
-
-    public boolean isPredefinedRolesModeAvailable() {
-        SecurityStorageMode valueFromConfig = config.getRolesStorageMode();
-        if (valueFromConfig == null) {
-            return true;
-        }
-
-        return SecurityStorageMode.SOURCE_CODE.equals(valueFromConfig) || SecurityStorageMode.MIXED.equals(valueFromConfig);
     }
 
     protected Map<String, RoleDefinition> getNameToPredefinedRoleMapping() {
