@@ -16,6 +16,20 @@
 
 package com.haulmont.cuba.security.role;
 
-public class ScreenElementsPermissions extends Permissions {
-    private static final long serialVersionUID = 3691551628715510163L;
+import com.haulmont.cuba.security.entity.Access;
+
+public class ScreenPermissionsContainer extends PermissionsContainer {
+
+    private static final long serialVersionUID = -6416873506276217570L;
+
+    private Access defaultScreenAccess;
+
+    public Access getDefaultScreenAccess() {
+        return defaultScreenAccess;
+    }
+
+    public void setDefaultScreenAccess(Access defaultScreenAccess) {
+        this.defaultScreenAccess = defaultScreenAccess;
+    }
+
 }

@@ -14,14 +14,8 @@
  * limitations under the License.
  */
 
-package com.haulmont.cuba.security.app.role;
+package com.haulmont.cuba.security.role;
 
-import com.haulmont.cuba.security.app.role.annotation.Role;
-
-/**
- * System role for {@code anonymous} user
- */
-@Role(name = AnonymousRoleDefinition.ROLE_NAME)
-public class AnonymousRoleDefinition extends AnnotatedRoleDefinition {
-    public static final String ROLE_NAME = "Anonymous";
+public class ScreenElementsPermissionsContainer extends PermissionsContainer {
+    private static final long serialVersionUID = 3691551628715510163L;
 }

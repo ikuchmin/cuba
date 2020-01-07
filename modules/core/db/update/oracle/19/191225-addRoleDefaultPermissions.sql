@@ -14,14 +14,10 @@
  * limitations under the License.
  */
 
-package com.haulmont.cuba.security.app.role;
-
-import com.haulmont.cuba.security.app.role.annotation.Role;
-
-/**
- * System role for {@code anonymous} user
- */
-@Role(name = AnonymousRoleDefinition.ROLE_NAME)
-public class AnonymousRoleDefinition extends AnnotatedRoleDefinition {
-    public static final String ROLE_NAME = "Anonymous";
-}
+alter table SEC_ROLE add DEFAULT_SCREEN_ACCESS integer;
+alter table SEC_ROLE add DEFAULT_ENTITY_CREATE_ACCESS integer;
+alter table SEC_ROLE add DEFAULT_ENTITY_READ_ACCESS integer;
+alter table SEC_ROLE add DEFAULT_ENTITY_UPDATE_ACCESS integer;
+alter table SEC_ROLE add DEFAULT_ENTITY_DELETE_ACCESS integer;
+alter table SEC_ROLE add DEFAULT_ENTITY_ATTRIBUTE_ACCESS integer;
+alter table SEC_ROLE add DEFAULT_SPECIFIC_ACCESS integer;

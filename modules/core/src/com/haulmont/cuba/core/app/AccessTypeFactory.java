@@ -14,14 +14,18 @@
  * limitations under the License.
  */
 
-package com.haulmont.cuba.security.role;
+package com.haulmont.cuba.core.app;
 
-public interface ApplicationRole {
+import com.haulmont.cuba.core.config.type.TypeFactory;
+import com.haulmont.cuba.security.entity.Access;
 
-    EntityPermissions entityPermissions();
+public class AccessTypeFactory extends TypeFactory {
+    @Override
+    public Object build(String string) {
+        if (string == null) {
+            return null;
+        }
 
-    EntityAttributePermissions entityAttributePermissions();
-
-    SpecificPermissions specificPermissions();
-
+        return Access.valueOf(string.toUpperCase());
+    }
 }

@@ -17,13 +17,44 @@
 package com.haulmont.cuba.security.app.role;
 
 
-import com.haulmont.cuba.security.app.role.annotation.Role;
-import com.haulmont.cuba.security.entity.*;
+import com.haulmont.cuba.security.app.role.annotation.*;
+import com.haulmont.cuba.security.entity.Access;
+import com.haulmont.cuba.security.entity.EntityAttrAccess;
+import com.haulmont.cuba.security.role.*;
 
 /**
  * System role for {@code admin} user.
  */
-@Role(name = AdministratorsRoleDefinition.ROLE_NAME, type = RoleType.SUPER)
+@Role(name = AdministratorsRoleDefinition.ROLE_NAME)
 public class AdministratorsRoleDefinition extends AnnotatedRoleDefinition {
     public static final String ROLE_NAME = "Administrators";
+
+    @Override
+    @DefaultEntityAccess(create = Access.ALLOW, read = Access.ALLOW, update = Access.ALLOW, delete = Access.ALLOW)
+    public EntityPermissionsContainer entityPermissions() {
+        return super.entityPermissions();
+    }
+
+    @Override
+    @DefaultEntityAttributeAccess(EntityAttrAccess.MODIFY)
+    public EntityAttributePermissionsContainer entityAttributePermissions() {
+        return super.entityAttributePermissions();
+    }
+
+    @Override
+    @DefaultSpecificAccess(Access.ALLOW)
+    public SpecificPermissionsContainer specificPermissions() {
+        return super.specificPermissions();
+    }
+
+    @Override
+    @DefaultScreenAccess(Access.ALLOW)
+    public ScreenPermissionsContainer screenPermissions() {
+        return super.screenPermissions();
+    }
+
+    @Override
+    public ScreenElementsPermissionsContainer screenElementsPermissions() {
+        return super.screenElementsPermissions();
+    }
 }

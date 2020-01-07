@@ -556,6 +556,14 @@ create table SEC_ROLE (
     DESCRIPTION varchar2(1000 char),
     IS_DEFAULT_ROLE char(1),
     ROLE_TYPE integer,
+    SECURITY_SCOPE varchar2(255 char),
+    DEFAULT_SCREEN_ACCESS integer,
+    DEFAULT_ENTITY_CREATE_ACCESS integer,
+    DEFAULT_ENTITY_READ_ACCESS integer,
+    DEFAULT_ENTITY_UPDATE_ACCESS integer,
+    DEFAULT_ENTITY_DELETE_ACCESS integer,
+    DEFAULT_ENTITY_ATTRIBUTE_ACCESS integer,
+    DEFAULT_SPECIFIC_ACCESS integer,
     primary key(ID)
 )^
 create unique index IDX_SEC_ROLE_UNIQ_NAME on SEC_ROLE(NAME, DELETE_TS)^

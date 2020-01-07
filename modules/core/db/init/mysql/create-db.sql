@@ -161,6 +161,14 @@ create table SEC_ROLE (
     DESCRIPTION varchar(1000),
     IS_DEFAULT_ROLE boolean,
     ROLE_TYPE integer,
+    SECURITY_SCOPE varchar(255),
+    DEFAULT_SCREEN_ACCESS integer,
+    DEFAULT_ENTITY_CREATE_ACCESS integer,
+    DEFAULT_ENTITY_READ_ACCESS integer,
+    DEFAULT_ENTITY_UPDATE_ACCESS integer,
+    DEFAULT_ENTITY_DELETE_ACCESS integer,
+    DEFAULT_ENTITY_ATTRIBUTE_ACCESS integer,
+    DEFAULT_SPECIFIC_ACCESS integer,
     --
     primary key (ID)
 )^

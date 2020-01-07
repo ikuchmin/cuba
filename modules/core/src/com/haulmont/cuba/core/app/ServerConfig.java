@@ -24,6 +24,7 @@ import com.haulmont.cuba.core.config.defaults.*;
 import com.haulmont.cuba.core.config.type.Factory;
 import com.haulmont.cuba.core.config.type.TokenizedStringListFactory;
 import com.haulmont.cuba.security.app.UserSessionsAPI;
+import com.haulmont.cuba.security.entity.Access;
 import com.haulmont.cuba.security.role.SecurityStorageMode;
 import com.haulmont.cuba.security.role.SecurityStorageModeFactory;
 
@@ -349,6 +350,24 @@ public interface ServerConfig extends Config {
     @Default("MIXED")
     @Factory(factory = SecurityStorageModeFactory.class)
     SecurityStorageMode getRolesStorageMode();
+
+    /**
+     * Defines a policy for resolving permission values that are not defined in roles.
+     *
+     * By default, if permission value is not defined (neither explicitly nor using default value) then it is denied.
+     */
+    @Property("cuba.permissions.undefinedAccessPolicy")
+    @Default("DENY")
+    @Factory(factory = AccessTypeFactory.class)
+    Access getPermissionUndefinedAccessPolicy();
+
+    /**
+     * Whether the {@link com.haulmont.cuba.core.sys.DefaultPermissionValuesConfig} should be used when permissions are
+     * calculated
+     */
+    @Property("cuba.permissions.defaultPermissionValuesConfigEnabled")
+    @DefaultBoolean(false)
+    boolean getDefaultPermissionValuesConfigEnabled();
 
     /**
      * Defines the source from which access groups are used in the application. There are 2 possible values:
