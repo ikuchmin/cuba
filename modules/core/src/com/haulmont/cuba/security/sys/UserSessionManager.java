@@ -133,17 +133,15 @@ public class UserSessionManager {
      * @return new session instance
      */
     public UserSession createSession(UUID sessionId, User user, Locale locale, boolean system, String securityScope) {
-        List<UserRole> userRoles = user.getUserRoles().stream()
-                .filter(ur ->
-                        securityScope != null ? Objects.equals(ur.getSecurityScope(), securityScope) :
-                                Strings.isNullOrEmpty(ur.getSecurityScope()))
-                .collect(Collectors.toList());
-
         List<RoleDefinition> roles = new ArrayList<>();
 
-        for (RoleDefinition role : rolesRepository.getRoleDefinitions(userRoles)) {
+        for (RoleDefinition role : rolesRepository.getRoleDefinitions(user.getUserRoles())) {
             if (role != null) {
-                roles.add(role);
+                String expectedScope = securityScope == null ? SecurityScope.DEFAULT_SCOPE_NAME : securityScope;
+                String actualScope = role.getSecurityScope() == null ? SecurityScope.DEFAULT_SCOPE_NAME : role.getSecurityScope();
+                if (Objects.equals(expectedScope, actualScope)) {
+                    roles.add(role);
+                }
             }
         }
         UserSession session = new UserSession(sessionId, user, roles, locale, system);

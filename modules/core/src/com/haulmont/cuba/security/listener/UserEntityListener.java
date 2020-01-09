@@ -78,7 +78,6 @@ public class UserEntityListener implements BeforeInsertEntityListener<User>, Bef
                 UserRole userRole = metadata.create(UserRole.class);
                 userRole.setUser(user);
                 userRole.setRole(entry.getValue());
-                userRole.setSecurityScope(entry.getValue().getSecurityScope());
 
                 entityManager.persist(userRole);
                 user.getUserRoles().add(userRole);
@@ -89,7 +88,6 @@ public class UserEntityListener implements BeforeInsertEntityListener<User>, Bef
                 UserRole userRole = metadata.create(UserRole.class);
                 userRole.setUser(user);
                 userRole.setRoleName(entry.getKey());
-                userRole.setSecurityScope(entry.getValue().getSecurityScope());
 
                 entityManager.persist(userRole);
                 user.getUserRoles().add(userRole);

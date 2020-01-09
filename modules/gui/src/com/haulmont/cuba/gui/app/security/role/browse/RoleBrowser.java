@@ -208,12 +208,10 @@ public class RoleBrowser extends AbstractLookup {
         locNameField.addValueChangeListener(e -> applyFilter());
         descriptionField.addValueChangeListener(e -> applyFilter());
 
-        applyFilter();
     }
 
     protected void applyFilter() {
         rolesDs.refresh(ParamsMap.of(
-                "securityScope", securityScope,
                 "name", nameField.getValue(),
                 "locName", locNameField.getValue(),
                 "description", descriptionField.getValue()

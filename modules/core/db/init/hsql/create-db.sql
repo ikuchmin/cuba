@@ -278,7 +278,6 @@ create table SEC_USER_ROLE (
     USER_ID varchar(36),
     ROLE_ID varchar(36),
     ROLE_NAME varchar(50),
-    SECURITY_SCOPE varchar(255),
     --
     primary key (ID),
     constraint SEC_USER_ROLE_USER foreign key (USER_ID) references SEC_USER(ID),

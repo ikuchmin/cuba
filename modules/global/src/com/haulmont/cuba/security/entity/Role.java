@@ -17,6 +17,7 @@
 package com.haulmont.cuba.security.entity;
 
 import com.haulmont.chile.core.annotations.Composition;
+import com.haulmont.chile.core.annotations.MetaProperty;
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.StandardEntity;
 import com.haulmont.cuba.core.entity.annotation.OnDelete;
@@ -106,6 +107,15 @@ public class Role extends StandardEntity {
 
     public void setSecurityScope(String securityScope) {
         this.securityScope = securityScope;
+    }
+
+    @MetaProperty(related = "securityScope")
+    public String getLocSecurityScope() {
+        if (securityScope != null) {
+            SecurityScope scope = new SecurityScope(securityScope);
+            return scope.getLocName();
+        }
+        return null;
     }
 
     public Access getDefaultScreenAccess() {

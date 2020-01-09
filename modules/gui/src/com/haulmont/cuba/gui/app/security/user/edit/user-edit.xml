@@ -83,7 +83,6 @@
                 <label value="msg://roles" stylename="h2"/>
                 <buttonsPanel>
                     <button id="rolesTableAddBtn"/>
-                    <popupButton id="rolesTableAddMultiBtn"/>
                     <button id="rolesTableEditBtn" action="rolesTable.edit"/>
                     <button id="rolesTableRemoveBtn" action="rolesTable.remove"/>
                 </buttonsPanel>

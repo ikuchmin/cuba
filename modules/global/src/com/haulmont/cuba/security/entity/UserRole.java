@@ -16,20 +16,16 @@
  */
 package com.haulmont.cuba.security.entity;
 
-import com.haulmont.chile.core.annotations.MetaProperty;
 import com.haulmont.cuba.core.entity.StandardEntity;
 import com.haulmont.cuba.core.entity.annotation.OnDeleteInverse;
 import com.haulmont.cuba.core.entity.annotation.SystemLevel;
-import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.DeletePolicy;
-import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.security.role.RoleDefinition;
 
 import javax.persistence.*;
 
 /**
  * Link between users and roles.
- *
  */
 @Entity(name = "sec$UserRole")
 @Table(name = "SEC_USER_ROLE")
@@ -50,9 +46,6 @@ public class UserRole extends StandardEntity {
 
     @Column(name = "ROLE_NAME")
     private String roleName;
-
-    @Column(name = "SECURITY_SCOPE")
-    private String securityScope;
 
     @Transient
     private transient RoleDefinition roleDefinition;
@@ -79,20 +72,6 @@ public class UserRole extends StandardEntity {
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
-    }
-
-    public String getSecurityScope() {
-        return securityScope;
-    }
-
-    public void setSecurityScope(String securityScope) {
-        this.securityScope = securityScope;
-    }
-
-    @MetaProperty(related = "securityScope")
-    public String getLocSecurityScope() {
-        Messages messages = AppBeans.get(Messages.class);
-        return securityScope == null ? null : messages.getMainMessage(String.format("securityScope_%s", securityScope));
     }
 
     public RoleDefinition getRoleDefinition() {
