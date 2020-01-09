@@ -77,7 +77,18 @@ public class MethodsCache {
                 } else {
                     name = StringUtils.uncapitalize(name.substring(3));
                 }
-                setters.put(name, setter);
+                if (setters.containsKey(name)) {
+                    BiConsumer containedSetter = setters.get(name);
+                    Class valueType = method.getParameterTypes()[0];
+                    ((SettersHolder) containedSetter).addSetter(valueType.isPrimitive() ?
+                            primitivesToObjects.get(valueType) : valueType, setter);
+                } else {
+                    SettersHolder settersHolder = new SettersHolder(name);
+                    Class valueType = method.getParameterTypes()[0];
+                    settersHolder.addSetter(valueType.isPrimitive() ?
+                            primitivesToObjects.get(valueType) : valueType, setter);
+                    setters.put(name, settersHolder);
+                }
             }
         }
         className = clazz.toString();
@@ -158,5 +169,38 @@ public class MethodsCache {
                     String.format("Can't find setter for property '%s' at %s", property, className));
         }
         return setter;
+    }
+
+    protected class SettersHolder implements BiConsumer {
+
+        protected Map<Class, BiConsumer> setters = new HashMap<>();
+        protected String property;
+
+        SettersHolder(String property) {
+            this.property = property;
+        }
+
+        public void addSetter(Class argType, BiConsumer setter) {
+            setters.put(argType, setter);
+        }
+
+        @Override
+        public void accept(Object object, Object value) {
+            boolean setterNotFound = true;
+            for (Class argType : setters.keySet()) {
+                if (argType.isInstance(value)) {
+                    setterNotFound = false;
+                    setters.get(argType).accept(object, value);
+                }
+            }
+            if (setterNotFound) {
+                throw new IllegalArgumentException(String.format(
+                        "Can't find setter for property '%s' at %s for value class: %s",
+                        property,
+                        className,
+                        value.getClass().getSimpleName()
+                ));
+            }
+        }
     }
 }
