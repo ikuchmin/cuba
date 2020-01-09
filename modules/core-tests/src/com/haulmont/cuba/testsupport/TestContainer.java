@@ -355,7 +355,7 @@ public class TestContainer extends ExternalResource implements BeforeAllCallback
         }
     }
 
-    protected void initDataSource(String dbDriver, String dbUrl, String dbUser, String dbPassword) {
+    private void initDataSource(String dbDriver, String dbUrl, String dbUser, String dbPassword) {
         try {
             Class.forName(dbDriver);
             TestDataSource ds = new TestDataSource(dbUrl, dbUser, dbPassword);
