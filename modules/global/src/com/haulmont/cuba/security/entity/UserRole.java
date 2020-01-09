@@ -92,7 +92,7 @@ public class UserRole extends StandardEntity {
     @MetaProperty(related = "securityScope")
     public String getLocSecurityScope() {
         Messages messages = AppBeans.get(Messages.class);
-        return securityScope == null ? null : messages.getMessage(SecurityScope.class, String.format("securityScope_%s", securityScope));
+        return securityScope == null ? null : messages.getMainMessage(String.format("securityScope_%s", securityScope));
     }
 
     public RoleDefinition getRoleDefinition() {

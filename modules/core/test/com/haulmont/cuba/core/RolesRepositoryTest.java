@@ -60,12 +60,6 @@ public class RolesRepositoryTest {
     }
 
     @Test
-    public void bothModesAreAvailableByDefault() {
-        assertTrue(rolesRepository.isDatabaseModeAvailable());
-        assertTrue(rolesRepository.isPredefinedRolesModeAvailable());
-    }
-
-    @Test
     public void testGetRoleDefs() {
         UserRole userRole = metadata.create(UserRole.class);
         userRole.setRoleName("Administrators");
