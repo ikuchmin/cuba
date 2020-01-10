@@ -47,7 +47,8 @@ public class AppProperties {
             new Pair<>("cuba.entityLog.enabled", "cuba.security.EntityLog.enabled"), // 6.1
             new Pair<>("cuba.cluster.messageSendingThreadPoolSize", "cuba.clusterMessageSendingThreadPoolSize"), // 6.1
             new Pair<>("reporting.entityTreeModelMaxDepth", "cuba.reporting.entityTreeModelMaxDeep"), // 6.1
-            new Pair<>("reporting.openoffice.docx.useOfficeForDocumentConversion", "reporting.openoffice.docx.useOfficeForPdfConversion"), // 6.7
+            new Pair<>("reporting.officePath.docx.useOfficeForDocumentConversion", "reporting.openoffice.docx.useOfficeForPdfConversion"), // 6.7
+            new Pair<>("reporting.officePath.*", "reporting.openoffice.*"), // 7.2
             new Pair<>("cuba.maxUploadSizeMb", "cuba.client.maxUploadSizeMb"), // 6.1
             new Pair<>("cuba.gui.systemInfoScriptsEnabled", "cuba.systemInfoScriptsEnabled"), // 6.1
             new Pair<>("cuba.gui.manualScreenSettingsSaving", "cuba.manualScreenSettingsSaving"), // 6.1
@@ -114,12 +115,16 @@ public class AppProperties {
                 }
             }
             if (pair.getFirst().equals(key) || pair.getSecond().equals(key)) {
-                return getDeprecatedProperty(pair);
+                String deprecatedProperty = getDeprecatedProperty(pair);
+                if (deprecatedProperty != null) {
+                    return deprecatedProperty;
+                }
             }
         }
         return getSystemOrAppProperty(key);
     }
 
+    @Nullable
     private String getDeprecatedProperty(Pair<String, String> pair) {
         String value = getSystemOrAppProperty(pair.getSecond());
         if (value != null)
