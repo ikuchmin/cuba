@@ -187,10 +187,10 @@ public class MethodsCache {
         @Override
         public void accept(Object object, Object value) {
             boolean setterNotFound = true;
-            for (Class argType : setters.keySet()) {
-                if (argType.isInstance(value)) {
+            for (Map.Entry<Class, BiConsumer> entry : setters.entrySet()) {
+                if (entry.getKey().isInstance(value)) {
                     setterNotFound = false;
-                    setters.get(argType).accept(object, value);
+                    entry.getValue().accept(object, value);
                 }
             }
             if (setterNotFound) {
