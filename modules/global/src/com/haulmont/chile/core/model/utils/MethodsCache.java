@@ -83,10 +83,10 @@ public class MethodsCache {
                     ((SettersHolder) containedSetter).addSetter(valueType.isPrimitive() ?
                             primitivesToObjects.get(valueType) : valueType, setter);
                 } else {
-                    SettersHolder settersHolder = new SettersHolder(name);
                     Class valueType = method.getParameterTypes()[0];
-                    settersHolder.addSetter(valueType.isPrimitive() ?
-                            primitivesToObjects.get(valueType) : valueType, setter);
+                    SettersHolder settersHolder = new SettersHolder(name,
+                            valueType.isPrimitive() ? primitivesToObjects.get(valueType) : valueType,
+                            setter);
                     setters.put(name, settersHolder);
                 }
             }
@@ -174,10 +174,13 @@ public class MethodsCache {
     protected class SettersHolder implements BiConsumer {
 
         protected Map<Class, BiConsumer> setters = new HashMap<>();
+        protected BiConsumer defaultSetter;
         protected String property;
 
-        SettersHolder(String property) {
+        SettersHolder(String property, Class defaultArgType, BiConsumer defaultSetter) {
             this.property = property;
+            this.defaultSetter = defaultSetter;
+            this.setters.put(defaultArgType, defaultSetter);
         }
 
         public void addSetter(Class argType, BiConsumer setter) {
@@ -186,6 +189,10 @@ public class MethodsCache {
 
         @Override
         public void accept(Object object, Object value) {
+            if (setters.size() == 1 || value == null) {
+                defaultSetter.accept(object, value);
+                return;
+            }
             boolean setterNotFound = true;
             for (Map.Entry<Class, BiConsumer> entry : setters.entrySet()) {
                 if (entry.getKey().isInstance(value)) {
