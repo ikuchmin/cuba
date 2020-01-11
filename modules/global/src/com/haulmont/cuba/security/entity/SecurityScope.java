@@ -39,7 +39,7 @@ public class SecurityScope implements Serializable {
 
     public String getLocName() {
         Messages messages = AppBeans.get(Messages.class);
-        return messages.getMessage(SecurityScope.class, String.format("securityScope_%s", name));
+        return messages.getMainMessage(String.format("securityScope_%s", name));
     }
 
     public boolean isDefault() {

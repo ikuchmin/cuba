@@ -262,14 +262,13 @@ create table SEC_USER_ROLE (
     USER_ID uuid,
     ROLE_ID uuid,
     ROLE_NAME varchar(50),
-    SECURITY_SCOPE varchar(255),
     --
     primary key (ID),
     constraint SEC_USER_ROLE_PROFILE foreign key (USER_ID) references SEC_USER(ID),
     constraint SEC_USER_ROLE_ROLE foreign key (ROLE_ID) references SEC_ROLE(ID)
 )^
 
-create unique index IDX_SEC_USER_ROLE_UNIQ_ROLE on SEC_USER_ROLE (USER_ID, ROLE_ID, SECURITY_SCOPE) where DELETE_TS is null^
+create unique index IDX_SEC_USER_ROLE_UNIQ_ROLE on SEC_USER_ROLE (USER_ID, ROLE_ID) where DELETE_TS is null^
 
 ------------------------------------------------------------------------------------------------------------
 

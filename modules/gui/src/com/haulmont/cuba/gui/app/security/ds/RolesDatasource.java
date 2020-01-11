@@ -59,10 +59,6 @@ public class RolesDatasource extends CollectionDatasourceImpl<Role, UUID> {
     protected List<Role> applyFilter(Collection<Role> entities, Map<String, Object> params) {
         Stream<Role> stream = entities.stream();
 
-        if (params.get("securityScope") != null) {
-            stream = stream.filter(e -> StringUtils.equalsIgnoreCase(e.getSecurityScope(), (String) params.get("securityScope")));
-        }
-
         if (params.get("name") != null) {
             stream = stream.filter(e -> StringUtils.containsIgnoreCase(e.getName(), (String) params.get("name")));
         }

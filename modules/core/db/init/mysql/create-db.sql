@@ -285,14 +285,13 @@ create table SEC_USER_ROLE (
     USER_ID varchar(32),
     ROLE_ID varchar(32),
     ROLE_NAME varchar(50),
-    SECURITY_SCOPE varchar(255),
     --
     primary key (ID),
     constraint SEC_USER_ROLE_PROFILE foreign key (USER_ID) references SEC_USER(ID),
     constraint SEC_USER_ROLE_ROLE foreign key (ROLE_ID) references SEC_ROLE(ID)
 )^
 
-create unique index IDX_SEC_USER_ROLE_UNIQ_ROLE on SEC_USER_ROLE (USER_ID, ROLE_ID, SECURITY_SCOPE, DELETE_TS_NN)^
+create unique index IDX_SEC_USER_ROLE_UNIQ_ROLE on SEC_USER_ROLE (USER_ID, ROLE_ID, DELETE_TS_NN)^
 
 create trigger SEC_USER_ROLE_DELETE_TS_NN_TRIGGER before update on SEC_USER_ROLE
 for each row

@@ -1,1 +1,0 @@
-alter table SEC_USER_ROLE add SECURITY_SCOPE varchar(255)^
