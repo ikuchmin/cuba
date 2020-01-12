@@ -193,6 +193,14 @@ public class RolesRepository {
         role.setDefaultRole(roleDefinition.isDefault());
         role.setSecurityScope(roleDefinition.getSecurityScope());
 
+        role.setDefaultEntityCreateAccess(roleDefinition.entityPermissions().getDefaultEntityCreateAccess());
+        role.setDefaultEntityReadAccess(roleDefinition.entityPermissions().getDefaultEntityReadAccess());
+        role.setDefaultEntityUpdateAccess(roleDefinition.entityPermissions().getDefaultEntityUpdateAccess());
+        role.setDefaultEntityDeleteAccess(roleDefinition.entityPermissions().getDefaultEntityDeleteAccess());
+        role.setDefaultScreenAccess(roleDefinition.screenPermissions().getDefaultScreenAccess());
+        role.setDefaultEntityAttributeAccess(roleDefinition.entityAttributePermissions().getDefaultEntityAttributeAccess());
+        role.setDefaultSpecificAccess(roleDefinition.specificPermissions().getDefaultSpecificAccess());
+
         return role;
     }
 

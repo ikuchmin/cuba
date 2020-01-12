@@ -985,10 +985,10 @@ values ('a405db59e6744f638afe269dda788fe8', now(), 0, 'anonymous', 'anonymous', 
 'Anonymous', '0fa2b1a51d684d699fbddff348347f93', true)^
 
 insert into SEC_USER_ROLE (ID, CREATE_TS, VERSION, USER_ID, ROLE_NAME)
-values ('cbdddc701ee20fe4b63a2d92ef0b15a2', current_timestamp, 0, '608859871b61424794c7dff348347f93', 'Administrators')^
+values ('6736effb9dfc4430973a69868606b09c', current_timestamp, 0, '608859871b61424794c7dff348347f93', '<sys-full-access>')^
 
 insert into SEC_USER_ROLE (ID, CREATE_TS, VERSION, USER_ID, ROLE_NAME)
-values ('a848101b7d8a508a0e9cb53af9fad211', current_timestamp, 0, 'a405db59e6744f638afe269dda788fe8', 'Anonymous')^
+values ('0e5cc7f384304768a77b0962a43072b9', current_timestamp, 0, 'a405db59e6744f638afe269dda788fe8', '<sys-minimal>')^
 
 insert into SEC_FILTER (ID,CREATE_TS,CREATED_BY,VERSION,UPDATE_TS,UPDATED_BY,DELETE_TS,DELETED_BY,COMPONENT,NAME,XML,USER_ID,GLOBAL_DEFAULT)
 values ('b61d18cbe79a46f3b16deaf4aebb10dd',{ts '2010-03-01 11:14:06.830'},'admin',2,{ts '2010-03-01 11:52:53.170'},'admin',null,null,'[sec$User.browse].genericFilter','Search by role',

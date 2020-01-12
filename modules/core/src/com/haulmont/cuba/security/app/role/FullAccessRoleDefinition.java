@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2019 Haulmont.
+ * Copyright (c) 2008-2020 Haulmont.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,11 +23,11 @@ import com.haulmont.cuba.security.entity.EntityAttrAccess;
 import com.haulmont.cuba.security.role.*;
 
 /**
- * System role for {@code admin} user.
+ * System role that grants permissions on everything.
  */
-@Role(name = AdministratorsRoleDefinition.ROLE_NAME)
-public class AdministratorsRoleDefinition extends AnnotatedRoleDefinition {
-    public static final String ROLE_NAME = "Administrators";
+@Role(name = FullAccessRoleDefinition.ROLE_NAME)
+public class FullAccessRoleDefinition extends AnnotatedRoleDefinition {
+    public static final String ROLE_NAME = "<sys-full-access>";
 
     @Override
     @DefaultEntityAccess(create = Access.ALLOW, read = Access.ALLOW, update = Access.ALLOW, delete = Access.ALLOW)

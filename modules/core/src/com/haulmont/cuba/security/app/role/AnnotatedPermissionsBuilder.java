@@ -319,10 +319,6 @@ public class AnnotatedPermissionsBuilder {
             Object[] explicitAccessAnnotations = method.getAnnotationsByType(explicitAccessAnnotationClass);
             PermissionsContainer permissionsContainer = createPermissionsByMethodName(methodName);
 
-            if (explicitAccessAnnotations.length == 0) {
-                return permissionsContainer;
-            }
-
             for (Object annotation : explicitAccessAnnotations) {
                 permissionsContainer = explicitAccessBiFunction.apply(annotation, permissionsContainer);
             }
