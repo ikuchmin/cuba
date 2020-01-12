@@ -67,15 +67,20 @@ public class RoleEditor extends AbstractEditor<Role> {
     @Inject
     protected RolesService rolesService;
 
+    @Inject
+    protected GridLayout defaultAccessGrid;
+
     @Override
     protected void initNewItem(Role item) {
-        item.setDefaultScreenAccess(Access.DENY);
-        item.setDefaultEntityCreateAccess(Access.DENY);
-        item.setDefaultEntityReadAccess(Access.DENY);
-        item.setDefaultEntityUpdateAccess(Access.DENY);
-        item.setDefaultEntityDeleteAccess(Access.DENY);
-        item.setDefaultEntityAttributeAccess(EntityAttrAccess.DENY);
-        item.setDefaultSpecificAccess(Access.DENY);
+        if (!item.isPredefined()) {
+            item.setDefaultScreenAccess(Access.DENY);
+            item.setDefaultEntityCreateAccess(Access.DENY);
+            item.setDefaultEntityReadAccess(Access.DENY);
+            item.setDefaultEntityUpdateAccess(Access.DENY);
+            item.setDefaultEntityDeleteAccess(Access.DENY);
+            item.setDefaultEntityAttributeAccess(EntityAttrAccess.DENY);
+            item.setDefaultSpecificAccess(Access.DENY);
+        }
     }
 
     @Override
@@ -114,7 +119,9 @@ public class RoleEditor extends AbstractEditor<Role> {
         description.setEditable(false);
         locName.setEditable(false);
         defaultRole.setEditable(false);
-
+        defaultAccessGrid.getComponents().stream()
+                .filter(component -> component instanceof LookupField)
+                .forEach(component -> ((LookupField) component).setEditable(false));
         showNotification(getMessage("predefinedRoleIsUnchangeable"));
     }
 
