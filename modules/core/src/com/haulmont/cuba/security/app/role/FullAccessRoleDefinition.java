@@ -20,6 +20,7 @@ package com.haulmont.cuba.security.app.role;
 import com.haulmont.cuba.security.app.role.annotation.*;
 import com.haulmont.cuba.security.entity.Access;
 import com.haulmont.cuba.security.entity.EntityAttrAccess;
+import com.haulmont.cuba.security.entity.EntityOp;
 import com.haulmont.cuba.security.role.*;
 
 /**
@@ -30,7 +31,7 @@ public class FullAccessRoleDefinition extends AnnotatedRoleDefinition {
     public static final String ROLE_NAME = "<sys-full-access>";
 
     @Override
-    @DefaultEntityAccess(create = Access.ALLOW, read = Access.ALLOW, update = Access.ALLOW, delete = Access.ALLOW)
+    @DefaultEntityAccess(allow = {EntityOp.CREATE, EntityOp.READ, EntityOp.UPDATE, EntityOp.DELETE})
     public EntityPermissionsContainer entityPermissions() {
         return super.entityPermissions();
     }

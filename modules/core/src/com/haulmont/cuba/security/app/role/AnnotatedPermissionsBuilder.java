@@ -31,6 +31,10 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.function.BiFunction;
 
 /**
@@ -228,10 +232,42 @@ public class AnnotatedPermissionsBuilder {
 
     protected EntityPermissionsContainer processDefaultEntityAccessAnnotation(DefaultEntityAccess annotation,
                                                                               EntityPermissionsContainer permissions) {
-        permissions.setDefaultEntityCreateAccess(annotation.create());
-        permissions.setDefaultEntityReadAccess(annotation.read());
-        permissions.setDefaultEntityUpdateAccess(annotation.update());
-        permissions.setDefaultEntityDeleteAccess(annotation.delete());
+        List<EntityOp> allow = Arrays.asList(annotation.allow());
+        List<EntityOp> deny = Arrays.asList(annotation.deny());
+
+        Access defaultCreate = null;
+        Access defaultRead = null;
+        Access defaultUpdate = null;
+        Access defaultDelete = null;
+
+        if (deny.contains(EntityOp.CREATE)) {
+            defaultCreate = Access.DENY;
+        } else if (allow.contains(EntityOp.CREATE)) {
+            defaultCreate = Access.ALLOW;
+        }
+
+        if (deny.contains(EntityOp.READ)) {
+            defaultRead = Access.DENY;
+        } else if (allow.contains(EntityOp.READ)) {
+            defaultRead = Access.ALLOW;
+        }
+
+        if (deny.contains(EntityOp.UPDATE)) {
+            defaultUpdate = Access.DENY;
+        } else if (allow.contains(EntityOp.UPDATE)) {
+            defaultUpdate = Access.ALLOW;
+        }
+
+        if (deny.contains(EntityOp.DELETE)) {
+            defaultDelete = Access.DENY;
+        } else if (allow.contains(EntityOp.DELETE)) {
+            defaultDelete = Access.ALLOW;
+        }
+
+        permissions.setDefaultEntityCreateAccess(defaultCreate);
+        permissions.setDefaultEntityReadAccess(defaultRead);
+        permissions.setDefaultEntityUpdateAccess(defaultUpdate);
+        permissions.setDefaultEntityDeleteAccess(defaultDelete);
         return permissions;
     }
 
