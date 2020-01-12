@@ -358,7 +358,6 @@ public interface ServerConfig extends Config {
      */
     @Property("cuba.permissions.undefinedAccessPolicy")
     @Default("DENY")
-    @Factory(factory = AccessTypeFactory.class)
     Access getPermissionUndefinedAccessPolicy();
 
     /**

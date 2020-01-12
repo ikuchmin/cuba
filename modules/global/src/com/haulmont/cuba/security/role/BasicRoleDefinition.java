@@ -38,7 +38,7 @@ public class BasicRoleDefinition implements RoleDefinition, Serializable {
 
     private BasicRoleDefinition(BasicRoleDefinitionBuilder builder) {
         this.name = builder.name;
-        this.description = builder.name;
+        this.description = builder.description;
         this.screenPermissions = builder.screenPermissions;
         this.entityPermissions = builder.entityPermissions;
         this.entityAttributePermissions = builder.entityAttributePermissions;
