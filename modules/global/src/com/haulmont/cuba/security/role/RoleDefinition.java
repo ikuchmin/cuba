@@ -50,4 +50,8 @@ public interface RoleDefinition {
     default String getSecurityScope() {
         return SecurityScope.DEFAULT_SCOPE_NAME;
     }
+
+    default String getLocName() {
+        return "";
+    }
 }

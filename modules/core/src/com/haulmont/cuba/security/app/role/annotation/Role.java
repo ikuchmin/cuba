@@ -38,11 +38,14 @@ import java.lang.annotation.Target;
  * and mark it with this annotation. Usage example:
  *
  * <pre>
- *     &#064;Role(name = "My first role", type = RoleType.STANDARD, isDefault = true)
+ *     &#064;Role(name = "My first role", isDefault = true)
  * public class MyFirstRole extends AnnotatedRoleDefinition {
  *
  *     &#064;EntityAccess(target = SomeEntity.class,
  *             deny = {EntityOp.DELETE, EntityOp.UPDATE})
+ *     &#064;DefaultEntityAccess(
+ *              allow = {EntityOp.READ},
+ *              deny = {EntityOp.DELETE, EntityOp.UPDATE})
  *     &#064;Override
  *     public EntityPermissions entityPermissions() {
  *         return super.entityPermissions();

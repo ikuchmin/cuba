@@ -189,6 +189,7 @@ public class RolesRepository {
         Role role = metadata.create(Role.class);
         role.setPredefined(true);
         role.setName(roleDefinition.getName());
+        role.setLocName(roleDefinition.getLocName());
         role.setDescription(roleDefinition.getDescription());
         role.setDefaultRole(roleDefinition.isDefault());
         role.setSecurityScope(roleDefinition.getSecurityScope());

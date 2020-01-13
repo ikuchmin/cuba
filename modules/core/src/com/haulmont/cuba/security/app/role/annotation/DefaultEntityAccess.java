@@ -31,7 +31,7 @@ import java.lang.annotation.Target;
  * <p>Example:
  *
  * <pre>
- *     &#064;DefaultEntityAccess(target = SomeEntity.class,
+ *     &#064;DefaultEntityAccess(
  *              allow = {EntityOp.READ},
  *              deny = {EntityOp.DELETE, EntityOp.UPDATE})
  * </pre>
