@@ -98,9 +98,7 @@ public class UserSessionManager {
      * @return new session instance
      */
     public UserSession createSession(User user, Locale locale, boolean system) {
-        UserSession session = createSession(uuidSource.createUuid(), user, locale, system, null);
-        session.setPermissionUndefinedAccessPolicy(serverConfig.getPermissionUndefinedAccessPolicy());
-        return session;
+        return createSession(uuidSource.createUuid(), user, locale, system, null);
     }
 
     /**
@@ -113,9 +111,7 @@ public class UserSessionManager {
      * @return new session instance
      */
     public UserSession createSession(User user, Locale locale, boolean system, String securityScope) {
-        UserSession session = createSession(uuidSource.createUuid(), user, locale, system, securityScope);
-        session.setPermissionUndefinedAccessPolicy(serverConfig.getPermissionUndefinedAccessPolicy());
-        return session;
+        return createSession(uuidSource.createUuid(), user, locale, system, securityScope);
     }
 
     /**
@@ -162,6 +158,7 @@ public class UserSessionManager {
         AccessGroupDefinition groupDefinition = compileGroupDefinition(user.getGroup(), user.getGroupNames());
         compileConstraints(session, groupDefinition);
         compileSessionAttributes(session, groupDefinition);
+        session.setPermissionUndefinedAccessPolicy(serverConfig.getPermissionUndefinedAccessPolicy());
 
         return session;
     }
@@ -190,6 +187,7 @@ public class UserSessionManager {
         AccessGroupDefinition groupDefinition = compileGroupDefinition(user.getGroup(), user.getGroupNames());
         compileConstraints(session, groupDefinition);
         compileSessionAttributes(session, groupDefinition);
+        session.setPermissionUndefinedAccessPolicy(serverConfig.getPermissionUndefinedAccessPolicy());
 
         return session;
     }
