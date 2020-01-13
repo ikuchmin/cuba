@@ -71,7 +71,7 @@ public class CubaTreeTable extends com.vaadin.v7.ui.TreeTable implements TreeTab
 
     protected Map<Object, CellClickListener> cellClickListeners; // lazily initialized map
 
-    protected Map<Object, CellClickListener> cellTextClickListeners; // lazily initialized map
+    protected Map<Object, TableCellClickListener> tableCellClickListeners; // lazily initialized map
 
     protected Map<Object, String> columnDescriptions; // lazily initialized map
 
@@ -100,27 +100,23 @@ public class CubaTreeTable extends com.vaadin.v7.ui.TreeTable implements TreeTab
     public CubaTreeTable() {
         registerRpc(new CubaTableServerRpc() {
             @Override
-            public void onClick(String columnKey, String rowKey) {
+            public void onClick(String columnKey, String rowKey, boolean isText) {
                 Object columnId = _columnIdMap().get(columnKey);
                 Object itemId = itemIdMapper.get(rowKey);
 
-                if (cellClickListeners != null) {
-                    CellClickListener cellClickListener = cellClickListeners.get(columnId);
-                    if (cellClickListener != null) {
-                        cellClickListener.onClick(itemId, columnId);
+                if (itemId != null) {
+                    if (cellClickListeners != null && isText) {
+                        CellClickListener cellClickListener = cellClickListeners.get(columnId);
+                        if (cellClickListener != null) {
+                            cellClickListener.onClick(itemId, columnId);
+                        }
                     }
-                }
-            }
 
-            @Override
-            public void onTextClick(String columnKey, String rowKey) {
-                Object columnId = _columnIdMap().get(columnKey);
-                Object itemId = itemIdMapper.get(rowKey);
-
-                if (cellTextClickListeners != null) {
-                    CellClickListener cellTextClickListener = cellTextClickListeners.get(columnId);
-                    if (cellTextClickListener != null) {
-                        cellTextClickListener.onClick(itemId, columnId);
+                    if (tableCellClickListeners != null) {
+                        TableCellClickListener tableCellClickListener = tableCellClickListeners.get(columnId);
+                        if (tableCellClickListener != null) {
+                            tableCellClickListener.onClick(itemId, columnId, isText);
+                        }
                     }
                 }
             }
@@ -774,17 +770,17 @@ public class CubaTreeTable extends com.vaadin.v7.ui.TreeTable implements TreeTab
     }
 
     @Override
-    public void setTextClickListener(Object propertyId, CellClickListener clickListener) {
-        if (cellTextClickListeners == null) {
-            cellTextClickListeners = new HashMap<>();
+    public void setTableCellClickListener(Object propertyId, TableCellClickListener clickListener) {
+        if (tableCellClickListeners == null) {
+            tableCellClickListeners = new HashMap<>();
         }
-        cellTextClickListeners.put(propertyId, clickListener);
+        tableCellClickListeners.put(propertyId, clickListener);
     }
 
     @Override
-    public void removeTextClickListener(Object propertyId) {
-        if (cellTextClickListeners != null) {
-            cellTextClickListeners.remove(propertyId);
+    public void removeTableCellClickListener(Object propertyId) {
+        if (tableCellClickListeners != null) {
+            tableCellClickListeners.remove(propertyId);
         }
     }
 
@@ -859,7 +855,7 @@ public class CubaTreeTable extends com.vaadin.v7.ui.TreeTable implements TreeTab
         super.beforeClientResponse(initial);
 
         updateClickableColumnKeys();
-        updateClickableTextColumnKeys();
+        updateClickableTableColumnKeys();
         updateColumnDescriptions();
         updateAggregatableTooltips();
         updateHtmlCaptionColumns();
@@ -915,16 +911,16 @@ public class CubaTreeTable extends com.vaadin.v7.ui.TreeTable implements TreeTab
         }
     }
 
-    protected void updateClickableTextColumnKeys() {
-        if (cellTextClickListeners != null) {
-            String[] clickableTextColumnKeys = new String[cellTextClickListeners.size()];
+    protected void updateClickableTableColumnKeys() {
+        if (tableCellClickListeners != null) {
+            String[] clickableTableColumnKeys = new String[tableCellClickListeners.size()];
             int i = 0;
-            for (Object columnId : cellTextClickListeners.keySet()) {
-                clickableTextColumnKeys[i] = _columnIdMap().key(columnId);
+            for (Object columnId : tableCellClickListeners.keySet()) {
+                clickableTableColumnKeys[i] = _columnIdMap().key(columnId);
                 i++;
             }
 
-            getState().clickableTextColumnKeys = clickableTextColumnKeys;
+            getState().clickableTableColumnKeys = clickableTableColumnKeys;
         }
     }
 

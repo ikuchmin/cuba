@@ -664,27 +664,27 @@ public interface Table<E extends Entity>
     }
 
     /**
-     * Add lightweight click handler for column cells.<br>
+     * Add lightweight click handler for text in column cells.<br>
      * Web specific: cell value will be wrapped in span with cuba-table-clickable-cell style name.<br>
      * You can use .cuba-table-clickable-cell for CSS rules to specify custom representation of cell value.
+     * <p>
+     * You cannot use cellClickListener for column with maxTextLength attribute, since cellClickListener is
+     * already installed to display abbreviated cell text.
      *
-     * @param columnId id of column
+     * @param columnId      id of column
      * @param clickListener cell click listener
      */
     void setCellClickListener(String columnId, Consumer<CellClickEvent<E>> clickListener);
 
     /**
-     * Add lightweight click handler for text in column cells.<br>
+     * Add lightweight click handler for column cells.<br>
      * Web specific: cell value will be wrapped in span with cuba-table-clickable-cell style name.<br>
      * You can use .cuba-table-clickable-cell for CSS rules to specify custom representation of cell value.
-     * <p>
-     * You cannot use cellTextClickListener for column with maxTextLength attribute, since cellTextClickListener is
-     * already installed to display abbreviated cell text.
      *
-     * @param columnId id of column
-     * @param clickListener cell text click listener
+     * @param columnId      id of column
+     * @param clickListener cell click listener
      */
-    void setCellTextClickListener(String columnId, Consumer<CellClickEvent<E>> clickListener);
+    void setTableCellClickListener(String columnId, Consumer<TableCellClickEvent<E>> clickListener);
 
     /**
      * Remove click listener.
@@ -729,6 +729,37 @@ public interface Table<E extends Entity>
 
         public String getColumnId() {
             return columnId;
+        }
+    }
+
+    class TableCellClickEvent<T extends Entity> extends EventObject {
+        protected final T item;
+        protected final String columnId;
+        protected final boolean isText;
+
+        public TableCellClickEvent(Table<T> source, T item, String columnId, boolean isText) {
+            super(source);
+            this.item = item;
+            this.columnId = columnId;
+            this.isText = isText;
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        public Table<T> getSource() {
+            return (Table<T>) super.getSource();
+        }
+
+        public T getItem() {
+            return item;
+        }
+
+        public String getColumnId() {
+            return columnId;
+        }
+
+        public boolean isText() {
+            return isText;
         }
     }
 
@@ -1253,7 +1284,7 @@ public interface Table<E extends Entity>
      * Very useful for heavy tables to decrease rendering time in browser.
      */
     class PlainTextCell implements Component {
-        
+
         protected Component parent;
         protected String text;
 

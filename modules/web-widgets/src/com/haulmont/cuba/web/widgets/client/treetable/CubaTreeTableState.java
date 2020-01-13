@@ -48,7 +48,7 @@ public class CubaTreeTableState extends TreeTableState {
 
     public String[] clickableColumnKeys;
 
-    public String[] clickableTextColumnKeys;
+    public String[] clickableTableColumnKeys;
 
     @NoLayout
     public Map<String, String> columnDescriptions;

@@ -73,10 +73,9 @@ public class TableWidgetDelegate {
     public Runnable emptyStateLinkClickHandler;
 
     public Set<String> clickableColumns;
-    public Set<String> clickableTextColumns;
+    public Set<String> clickableTableColumns;
     public Set<String> htmlCaptionColumns;
     public TableCellClickListener cellClickListener;
-    public TableCellClickListener cellTextClickListener;
 
     public TotalAggregationInputListener totalAggregationInputHandler;
     public GroupAggregationInputListener groupAggregationInputHandler;

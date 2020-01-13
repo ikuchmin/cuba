@@ -86,9 +86,9 @@ public interface CubaEnhancedTable extends AggregationContainer {
     void setClickListener(Object propertyId, CellClickListener clickListener);
     void removeClickListener(Object propertyId);
 
-    void setTextClickListener(Object propertyId, CellClickListener clickListener);
+    void setTableCellClickListener(Object propertyId, TableCellClickListener clickListener);
 
-    void removeTextClickListener(Object propertyId);
+    void removeTableCellClickListener(Object propertyId);
 
     void showCustomPopup(Component popupComponent);
 
@@ -135,8 +135,31 @@ public interface CubaEnhancedTable extends AggregationContainer {
      */
     void setSortOptions(Object propertyId, boolean sortAscending);
 
+    /**
+     * Receives the events if the user clicks on text in a cell or the 'maxTextLength' is set for column cell.
+     */
     interface CellClickListener {
+        /**
+         * Invoked when user clicked on text in a cell.
+         *
+         * @param itemId   id of item
+         * @param columnId id of column
+         */
         void onClick(Object itemId, Object columnId);
+    }
+
+    /**
+     * Receives the events when the user clicks on a cell.
+     */
+    interface TableCellClickListener {
+        /**
+         * Invoked when user clicked on a cell
+         *
+         * @param itemId   id of item
+         * @param columnId id of column
+         * @param isText   true click on the text in a cell, false click on cell
+         */
+        void onClick(Object itemId, Object columnId, boolean isText);
     }
 
     void setBeforePaintListener(Runnable beforePaintListener);

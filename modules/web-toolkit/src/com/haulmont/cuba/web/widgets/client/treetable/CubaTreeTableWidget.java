@@ -778,17 +778,17 @@ public class CubaTreeTableWidget extends VTreeTable implements TableWidget {
                         _delegate.lastClickClientX = (int) Math.ceil(rect.getLeft());
                         _delegate.lastClickClientY = (int) Math.ceil(rect.getBottom());
 
-                        if (isClickableCellText && _delegate.cellTextClickListener != null) {
-                            _delegate.cellTextClickListener.onClick(columnKey, rowKey);
+                        if (_delegate.cellClickListener != null) {
+                            _delegate.cellClickListener.onClick(columnKey, rowKey, isClickableCellText);
 
-                            event.preventDefault();
-                            event.stopPropagation();
+                            if (isClickableCellText
+                                    && _delegate.clickableColumns != null
+                                    && _delegate.clickableColumns.contains(columnKey)) {
+                                event.preventDefault();
+                                event.stopPropagation();
 
-                            return;
-                        }
-
-                        if (isClickableCell && _delegate.cellClickListener != null) {
-                            _delegate.cellClickListener.onClick(columnKey, rowKey);
+                                return;
+                            }
                         }
                     }
                 }
@@ -886,7 +886,7 @@ public class CubaTreeTableWidget extends VTreeTable implements TableWidget {
                 Tools.textSelectionEnable(tdElement, _delegate.textSelectionEnabled);
 
                 if ((_delegate.clickableColumns != null && _delegate.clickableColumns.contains(currentColumnKey))
-                        || (_delegate.clickableTextColumns != null && _delegate.clickableTextColumns.contains(currentColumnKey))) {
+                        || (_delegate.clickableTableColumns != null && _delegate.clickableTableColumns.contains(currentColumnKey))) {
                     tdElement.addClassName(CUBA_TABLE_CLICKABLE_CELL_CONTENT);
                     Element wrapperElement = tdElement.getFirstChildElement();
                     final Element clickableSpan = DOM.createSpan().cast();
