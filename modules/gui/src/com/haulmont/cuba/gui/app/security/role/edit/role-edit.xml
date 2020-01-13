@@ -60,6 +60,10 @@
                                   rows="3"
                                   width="100%"/>
                     </row>
+                    <row>
+                        <label id="predefinedRoleWarningLabel" value="msg://predefinedRoleWarning"
+                               stylename="small" visible="false" colspan="2"/>
+                    </row>
                 </rows>
             </grid>
             <groupBox id="defaultAccessBox" caption="msg://defaultPermissions" width="AUTO">

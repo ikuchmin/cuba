@@ -70,6 +70,9 @@ public class RoleEditor extends AbstractEditor<Role> {
     @Inject
     protected GridLayout defaultAccessGrid;
 
+    @Inject
+    protected Label<String> predefinedRoleWarningLabel;
+
     @Override
     protected void initNewItem(Role item) {
         if (!item.isPredefined()) {
@@ -97,6 +100,7 @@ public class RoleEditor extends AbstractEditor<Role> {
 
         if (role.isPredefined()) {
             restrictAccessForPredefinedRole();
+            predefinedRoleWarningLabel.setVisible(true);
         }
         initSecurityScopes();
     }
@@ -122,7 +126,6 @@ public class RoleEditor extends AbstractEditor<Role> {
         defaultAccessGrid.getComponents().stream()
                 .filter(component -> component instanceof LookupField)
                 .forEach(component -> ((LookupField) component).setEditable(false));
-        showNotification(getMessage("predefinedRoleIsUnchangeable"));
     }
 
     protected void initSecurityScopes() {
