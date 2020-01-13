@@ -32,7 +32,7 @@ import com.haulmont.cuba.security.role.SpecificPermissionsContainer;
 @Role(name = MinimalRoleDefinition.ROLE_NAME)
 public class MinimalRoleDefinition extends AnnotatedRoleDefinition {
 
-    public static final String ROLE_NAME = "<sys-minimal>";
+    public static final String ROLE_NAME = "system-minimal";
 
     @Override
     @ScreenAccess(allow = {
@@ -78,5 +78,10 @@ public class MinimalRoleDefinition extends AnnotatedRoleDefinition {
     @SpecificAccess(target = "cuba.gui.loginToClient", access = Access.ALLOW)
     public SpecificPermissionsContainer specificPermissions() {
         return super.specificPermissions();
+    }
+
+    @Override
+    public String getLocName() {
+        return "Minimal";
     }
 }

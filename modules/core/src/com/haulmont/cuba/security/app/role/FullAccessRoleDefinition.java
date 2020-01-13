@@ -28,7 +28,7 @@ import com.haulmont.cuba.security.role.*;
  */
 @Role(name = FullAccessRoleDefinition.ROLE_NAME)
 public class FullAccessRoleDefinition extends AnnotatedRoleDefinition {
-    public static final String ROLE_NAME = "<sys-full-access>";
+    public static final String ROLE_NAME = "system-full-access";
 
     @Override
     @DefaultEntityAccess(allow = {EntityOp.CREATE, EntityOp.READ, EntityOp.UPDATE, EntityOp.DELETE})
@@ -57,5 +57,10 @@ public class FullAccessRoleDefinition extends AnnotatedRoleDefinition {
     @Override
     public ScreenElementsPermissionsContainer screenElementsPermissions() {
         return super.screenElementsPermissions();
+    }
+
+    @Override
+    public String getLocName() {
+        return "Full access";
     }
 }
