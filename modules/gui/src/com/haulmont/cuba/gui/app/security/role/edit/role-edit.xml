@@ -45,6 +45,7 @@
 
                             <label value="msg://com.haulmont.cuba.security.entity/Role.securityScope" align="MIDDLE_LEFT"/>
                             <lookupField id="securityScopeLookup" datasource="roleDs" property="securityScope"
+                                         nullOptionVisible="false"
                                          width="theme://cuba.gui.role-edit.securityScope.width"/>
                         </row>
                         <row id="gridRow2">

@@ -123,8 +123,8 @@ public class RoleEditor extends AbstractEditor<Role> {
         securityScopeLookup.setOptionsMap(securityScopesService.getAvailableSecurityScopes()
                 .stream()
                 .collect(Collectors.toMap(SecurityScope::getLocName, SecurityScope::getName)));
-//        if (securityScopesService.isOnlyDefaultScope()) {
-//            securityScopeLookup.setEditable(false);
-//        }
+        if (securityScopesService.isOnlyDefaultScope()) {
+            securityScopeLookup.setEditable(false);
+        }
     }
 }
