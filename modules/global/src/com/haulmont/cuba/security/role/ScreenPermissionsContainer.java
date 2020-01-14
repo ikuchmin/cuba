@@ -14,15 +14,22 @@
  * limitations under the License.
  */
 
-package com.haulmont.cuba.security.app.role;
+package com.haulmont.cuba.security.role;
 
-import com.haulmont.cuba.security.app.role.annotation.Role;
-import com.haulmont.cuba.security.entity.RoleType;
+import com.haulmont.cuba.security.entity.Access;
 
-/**
- * System role for {@code anonymous} user
- */
-@Role(name = AnonymousRoleDefinition.ROLE_NAME, type = RoleType.DENYING)
-public class AnonymousRoleDefinition extends AnnotatedRoleDefinition {
-    public static final String ROLE_NAME = "Anonymous";
+public class ScreenPermissionsContainer extends PermissionsContainer {
+
+    private static final long serialVersionUID = -6416873506276217570L;
+
+    private Access defaultScreenAccess;
+
+    public Access getDefaultScreenAccess() {
+        return defaultScreenAccess;
+    }
+
+    public void setDefaultScreenAccess(Access defaultScreenAccess) {
+        this.defaultScreenAccess = defaultScreenAccess;
+    }
+
 }

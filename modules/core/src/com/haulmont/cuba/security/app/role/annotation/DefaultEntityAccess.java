@@ -16,31 +16,31 @@
 
 package com.haulmont.cuba.security.app.role.annotation;
 
-import com.haulmont.cuba.core.entity.Entity;
+import com.haulmont.cuba.security.entity.EntityOp;
+import com.haulmont.cuba.security.role.RoleDefinition;
 
-import java.lang.annotation.*;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * Defines permissions to access individual entity attributes.
+ * Annotation must be placed on the {@link RoleDefinition#entityPermissions()} method of the role definition. The
+ * annotation defines default permissions for entity access operations.
  *
  * <p>Example:
  *
  * <pre>
- *     &#064;EntityAttributeAccess(target = SomeEntity.class, modify = {"someAttribute"})
+ *     &#064;DefaultEntityAccess(
+ *              allow = {EntityOp.READ},
+ *              deny = {EntityOp.DELETE, EntityOp.UPDATE})
  * </pre>
- *
- * @see Role
  */
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-@Repeatable(EntityAttributeAccessContainer.class)
-public @interface EntityAttributeAccess {
+public @interface DefaultEntityAccess {
 
-    Class<? extends Entity> target();
+    EntityOp[] deny() default {};
 
-    String[] deny() default {};
-
-    String[] modify() default {};
-
-    String[] view() default {};
+    EntityOp[] allow() default {};
 }

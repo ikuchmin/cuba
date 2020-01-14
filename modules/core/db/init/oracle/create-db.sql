@@ -556,6 +556,14 @@ create table SEC_ROLE (
     DESCRIPTION varchar2(1000 char),
     IS_DEFAULT_ROLE char(1),
     ROLE_TYPE integer,
+    SECURITY_SCOPE varchar2(255 char),
+    DEFAULT_SCREEN_ACCESS integer,
+    DEFAULT_ENTITY_CREATE_ACCESS integer,
+    DEFAULT_ENTITY_READ_ACCESS integer,
+    DEFAULT_ENTITY_UPDATE_ACCESS integer,
+    DEFAULT_ENTITY_DELETE_ACCESS integer,
+    DEFAULT_ENTITY_ATTRIBUTE_ACCESS integer,
+    DEFAULT_SPECIFIC_ACCESS integer,
     primary key(ID)
 )^
 create unique index IDX_SEC_ROLE_UNIQ_NAME on SEC_ROLE(NAME, DELETE_TS)^
@@ -848,10 +856,10 @@ values ('a405db59e6744f638afe269dda788fe8', current_timestamp, 0, 'anonymous', '
 'Anonymous', '0fa2b1a51d684d699fbddff348347f93', 1)^
 
 insert into SEC_USER_ROLE (ID, CREATE_TS, VERSION, USER_ID, ROLE_NAME)
-values ('cbdddc701ee20fe4b63a2d92ef0b15a2', current_timestamp, 0, '608859871b61424794c7dff348347f93', 'Administrators')^
+values ('6736effb9dfc4430973a69868606b09c', current_timestamp, 0, '608859871b61424794c7dff348347f93', 'system-full-access')^
 
 insert into SEC_USER_ROLE (ID, CREATE_TS, VERSION, USER_ID, ROLE_NAME)
-values ('a848101b7d8a508a0e9cb53af9fad211', current_timestamp, 0, 'a405db59e6744f638afe269dda788fe8', 'Anonymous')^
+values ('0e5cc7f384304768a77b0962a43072b9', current_timestamp, 0, 'a405db59e6744f638afe269dda788fe8', 'system-minimal')^
 
 insert into SEC_FILTER (ID,CREATE_TS,CREATED_BY,VERSION,COMPONENT,NAME,XML,USER_ID,GLOBAL_DEFAULT)
 values (newid(), current_timestamp, 'admin', 0, '[sec$User.browse].genericFilter', 'Search by role',

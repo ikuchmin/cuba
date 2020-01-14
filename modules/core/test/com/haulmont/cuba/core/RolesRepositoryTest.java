@@ -125,10 +125,10 @@ public class RolesRepositoryTest {
             }
 
             @Override
-            public SpecificPermissions specificPermissions() {
-                SpecificPermissions permissions = new SpecificPermissions();
-                PermissionsUtils.addPermission(permissions, "specPermission1", null, 1);
-                PermissionsUtils.addPermission(permissions, "specPermission2", null, 0);
+            public SpecificPermissionsContainer specificPermissions() {
+                SpecificPermissionsContainer permissions = new SpecificPermissionsContainer();
+                permissions.getExplicitPermissions().put("specPermission1", 1);
+                permissions.getExplicitPermissions().put("specPermission2", 0);
                 return permissions;
             }
 
@@ -151,37 +151,32 @@ public class RolesRepositoryTest {
     protected class TestRole implements RoleDefinition {
 
         @Override
-        public RoleType getRoleType() {
-            return RoleType.STANDARD;
-        }
-
-        @Override
         public String getName() {
             return "TestRole";
         }
 
         @Override
-        public EntityPermissions entityPermissions() {
+        public EntityPermissionsContainer entityPermissions() {
             return null;
         }
 
         @Override
-        public EntityAttributePermissions entityAttributePermissions() {
+        public EntityAttributePermissionsContainer entityAttributePermissions() {
             return null;
         }
 
         @Override
-        public SpecificPermissions specificPermissions() {
+        public SpecificPermissionsContainer specificPermissions() {
             return null;
         }
 
         @Override
-        public ScreenPermissions screenPermissions() {
+        public ScreenPermissionsContainer screenPermissions() {
             return null;
         }
 
         @Override
-        public ScreenElementsPermissions screenElementsPermissions() {
+        public ScreenElementsPermissionsContainer screenElementsPermissions() {
             return null;
         }
 

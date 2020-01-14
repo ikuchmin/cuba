@@ -16,12 +16,6 @@
 
 package com.haulmont.cuba.security.role;
 
-public interface ApplicationRole {
-
-    EntityPermissions entityPermissions();
-
-    EntityAttributePermissions entityAttributePermissions();
-
-    SpecificPermissions specificPermissions();
-
+public class ScreenElementsPermissionsContainer extends PermissionsContainer {
+    private static final long serialVersionUID = 3691551628715510163L;
 }

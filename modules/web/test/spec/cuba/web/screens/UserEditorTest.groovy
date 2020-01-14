@@ -57,7 +57,7 @@ class UserEditorTest extends UiScreenSpec {
     }
 
     void cleanup() {
-        sessionSource.session.removePermissions(PermissionType.ENTITY_OP)
+        sessionSource.session.effectiveRole.entityPermissions().explicitPermissions.clear()
     }
 
     def "open UserEditor"() {
@@ -97,8 +97,8 @@ class UserEditorTest extends UiScreenSpec {
         def session = sessionSource.session
 
         def userMetaClass = metadata.getClass(User).name
-        session.addPermission(PermissionType.ENTITY_OP, userMetaClass + ":" + EntityOp.CREATE.id, "", PermissionValue.DENY.value)
-        session.addPermission(PermissionType.ENTITY_OP, userMetaClass + ":" + EntityOp.UPDATE.id, "", PermissionValue.DENY.value)
+        session.addPermission(PermissionType.ENTITY_OP, userMetaClass + ":" + EntityOp.CREATE.id, PermissionValue.DENY.value)
+        session.addPermission(PermissionType.ENTITY_OP, userMetaClass + ":" + EntityOp.UPDATE.id, PermissionValue.DENY.value)
 
         when:
         def mainWindow = screens.create("mainWindow", OpenMode.ROOT)
@@ -130,7 +130,7 @@ class UserEditorTest extends UiScreenSpec {
         def session = sessionSource.session
 
         def userMetaClass = metadata.getClass(User).name
-        session.addPermission(PermissionType.ENTITY_OP, userMetaClass + ":" + EntityOp.READ.id, "", PermissionValue.DENY.value)
+        session.addPermission(PermissionType.ENTITY_OP, userMetaClass + ":" + EntityOp.READ.id, PermissionValue.DENY.value)
 
         when:
         def mainWindow = screens.create("mainWindow", OpenMode.ROOT)

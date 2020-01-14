@@ -16,6 +16,19 @@
 
 package com.haulmont.cuba.security.role;
 
-public class EntityPermissions extends Permissions {
-    private static final long serialVersionUID = 1810208523892912417L;
+import com.haulmont.cuba.security.entity.Access;
+
+public class SpecificPermissionsContainer extends PermissionsContainer {
+
+    private static final long serialVersionUID = 182848717412671042L;
+
+    private Access defaultSpecificAccess;
+
+    public Access getDefaultSpecificAccess() {
+        return defaultSpecificAccess;
+    }
+
+    public void setDefaultSpecificAccess(Access defaultSpecificAccess) {
+        this.defaultSpecificAccess = defaultSpecificAccess;
+    }
 }
