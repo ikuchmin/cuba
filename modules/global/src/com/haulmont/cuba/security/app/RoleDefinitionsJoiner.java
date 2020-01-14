@@ -57,8 +57,8 @@ public class RoleDefinitionsJoiner {
      * @return a new RoleDefinition that contains joined permissions
      */
     public static RoleDefinition join(RoleDefinition role1, RoleDefinition role2) {
-        BasicRoleDefinition.BasicRoleDefinitionBuilder builder = BasicRoleDefinition.builder();
-        return builder.withName(role1.getName())
+        return BasicRoleDefinition.builder()
+                .withName(role1.getName())
                 .withDescription(role1.getDescription())
                 .withScreenPermissions(joinScreenPermissions(role1, role2))
                 .withEntityPermissions(joinEntityPermissions(role1, role2))

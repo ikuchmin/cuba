@@ -32,10 +32,8 @@ import javax.inject.Inject;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.function.BiFunction;
+import java.util.function.BiConsumer;
 
 /**
  * INTERNAL
@@ -109,7 +107,7 @@ public class AnnotatedPermissionsBuilder {
                 SCREEN_ELEMENTS_ACCESS_METHOD_NAME,
                 (annotation, permissions) -> processScreenElementAccessAnnotation((ScreenElementAccess) annotation,
                         (ScreenElementsPermissionsContainer) permissions),
-                (annotation, permissions) -> permissions);
+                (annotation, permissions) -> {});
     }
 
     ;
@@ -344,8 +342,8 @@ public class AnnotatedPermissionsBuilder {
             Class<? extends Annotation> explicitAccessAnnotationClass,
             @Nullable Class<? extends Annotation> defaultAccessAnnotationClass,
             String methodName,
-            BiFunction<Object, PermissionsContainer, PermissionsContainer> explicitAccessBiFunction,
-            BiFunction<Object, PermissionsContainer, PermissionsContainer> defaultAccessBiFunction) {
+            BiConsumer<Object, PermissionsContainer> explicitAccessBiFunction,
+            BiConsumer<Object, PermissionsContainer> defaultAccessBiFunction) {
         if (role == null) {
             return null;
         }
@@ -356,13 +354,13 @@ public class AnnotatedPermissionsBuilder {
             PermissionsContainer permissionsContainer = createPermissionsByMethodName(methodName);
 
             for (Object annotation : explicitAccessAnnotations) {
-                permissionsContainer = explicitAccessBiFunction.apply(annotation, permissionsContainer);
+                explicitAccessBiFunction.accept(annotation, permissionsContainer);
             }
 
             if (defaultAccessAnnotationClass != null) {
                 Annotation defaultAccessAnnotation = method.getAnnotation(defaultAccessAnnotationClass);
                 if (defaultAccessAnnotation != null) {
-                    permissionsContainer = defaultAccessBiFunction.apply(defaultAccessAnnotation, permissionsContainer);
+                    defaultAccessBiFunction.accept(defaultAccessAnnotation, permissionsContainer);
                 }
             }
 
