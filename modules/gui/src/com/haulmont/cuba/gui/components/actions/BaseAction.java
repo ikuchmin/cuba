@@ -194,6 +194,8 @@ public class BaseAction extends AbstractAction implements Action.SecuredAction {
         if (!enabledRules.contains(enabledRule)) {
             enabledRules.add(enabledRule);
         }
+
+        refreshState();
     }
 
     /**
@@ -205,6 +207,8 @@ public class BaseAction extends AbstractAction implements Action.SecuredAction {
         if (enabledRules != null) {
             enabledRules.remove(enabledRule);
         }
+
+        refreshState();
     }
 
     /**
