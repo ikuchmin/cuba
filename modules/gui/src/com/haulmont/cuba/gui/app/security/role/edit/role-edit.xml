@@ -33,40 +33,39 @@
                 resizable="true"/>
 
     <layout expand="permissionsTabsheet" spacing="true">
-        <scrollBox id="rolePropertiesScrollBox" spacing="true" orientation="horizontal" scrollBars="horizontal" width="100%" height="AUTO">
-            <grid id="roleNameGrid" spacing="true" width="AUTO">
-                <columns count="4"/>
-                <rows>
-                    <row id="gridRow1">
-                        <label value="msg://com.haulmont.cuba.security.entity/Role.name" align="MIDDLE_LEFT"/>
-                        <textField id="name" datasource="roleDs" property="name" width="${width}" required="true"
-                                   requiredMessage="msg://nameMsg"/>
+        <scrollBox id="rolePropertiesScrollBox" spacing="true" orientation="horizontal" scrollBars="horizontal"
+                   width="100%" height="theme://cuba.gui.role-edit.generalGroupBox.height">
+            <groupBox id="roleGeneralGroupBox" spacing="true" caption="msg://general" width="AUTO" height="100%">
+                <grid id="roleNameGrid" spacing="true" width="AUTO">
+                    <columns count="4"/>
+                    <rows>
+                        <row id="gridRow1">
+                            <label value="msg://com.haulmont.cuba.security.entity/Role.name" align="MIDDLE_LEFT"/>
+                            <textField id="name" datasource="roleDs" property="name" width="${width}" required="true"
+                                       requiredMessage="msg://nameMsg"/>
 
-                        <label value="msg://com.haulmont.cuba.security.entity/Role.securityScope" align="MIDDLE_LEFT"/>
-                        <lookupField id="securityScopeLookup" datasource="roleDs" property="securityScope"
-                                     width="theme://cuba.gui.role-edit.securityScope.width"/>
-                    </row>
-                    <row id="gridRow2">
-                        <label value="msg://com.haulmont.cuba.security.entity/Role.locName" align="MIDDLE_LEFT"/>
-                        <textField id="locName" datasource="roleDs" property="locName" width="${width}"/>
+                            <label value="msg://com.haulmont.cuba.security.entity/Role.securityScope" align="MIDDLE_LEFT"/>
+                            <lookupField id="securityScopeLookup" datasource="roleDs" property="securityScope"
+                                         width="theme://cuba.gui.role-edit.securityScope.width" nullOptionVisible="false"/>
+                        </row>
+                        <row id="gridRow2">
+                            <label value="msg://com.haulmont.cuba.security.entity/Role.locName" align="MIDDLE_LEFT"/>
+                            <textField id="locName" datasource="roleDs" property="locName" width="${width}"/>
 
-                        <label value="msg://com.haulmont.cuba.security.entity/Role.defaultRole" align="MIDDLE_LEFT"/>
-                        <checkBox id="defaultRole" datasource="roleDs" property="defaultRole" align="MIDDLE_LEFT"/>
-                    </row>
-                    <row id="gridRow3">
-                        <label value="msg://com.haulmont.cuba.security.entity/Role.description" align="MIDDLE_LEFT"/>
-                        <textArea id="description" datasource="roleDs" property="description"
-                                  colspan="3"
-                                  rows="3"
-                                  width="100%"/>
-                    </row>
-                    <row>
-                        <label id="predefinedRoleWarningLabel" value="msg://predefinedRoleWarning"
-                               stylename="small" visible="false" colspan="2"/>
-                    </row>
-                </rows>
-            </grid>
-            <groupBox id="defaultAccessBox" caption="msg://defaultPermissions" width="AUTO">
+                            <label value="msg://com.haulmont.cuba.security.entity/Role.defaultRole" align="MIDDLE_LEFT"/>
+                            <checkBox id="defaultRole" datasource="roleDs" property="defaultRole" align="MIDDLE_LEFT"/>
+                        </row>
+                        <row id="gridRow3">
+                            <label value="msg://com.haulmont.cuba.security.entity/Role.description" align="MIDDLE_LEFT"/>
+                            <textArea id="description" datasource="roleDs" property="description"
+                                      colspan="3"
+                                      rows="2"
+                                      width="100%"/>
+                        </row>
+                    </rows>
+                </grid>
+            </groupBox>
+            <groupBox id="defaultAccessBox" caption="msg://defaultPermissions" width="AUTO" height="100%">
                 <grid id="defaultAccessGrid" spacing="true" width="AUTO">
                     <columns count="4"/>
                     <rows>
