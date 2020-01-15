@@ -36,6 +36,7 @@ public class RoleDefinitionBuilder {
     private ScreenElementsPermissionsContainer screenElementsPermissions;
     private String roleName;
     private String description;
+    private String securityScope;
 
     /**
      * INTERNAL
@@ -74,6 +75,17 @@ public class RoleDefinitionBuilder {
      */
     public RoleDefinitionBuilder withDescription(String description) {
         this.description = description;
+
+        return this;
+    }
+
+    /**
+     * Specifies the security scope of the role.
+     *
+     * @return current instance of the builder
+     */
+    public RoleDefinitionBuilder withSecurityScope(String securityScope) {
+        this.securityScope = securityScope;
 
         return this;
     }
@@ -190,6 +202,7 @@ public class RoleDefinitionBuilder {
         return BasicRoleDefinition.builder()
                 .withName(roleName)
                 .withDescription(description)
+                .withSecurityScope(securityScope)
                 .withEntityPermissions(entityPermissions)
                 .withEntityAttributePermissions(entityAttributePermissions)
                 .withSpecificPermissions(specificPermissions)

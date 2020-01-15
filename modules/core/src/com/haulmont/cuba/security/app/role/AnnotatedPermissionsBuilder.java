@@ -23,7 +23,6 @@ import com.haulmont.cuba.security.app.role.annotation.*;
 import com.haulmont.cuba.security.entity.Access;
 import com.haulmont.cuba.security.entity.EntityAttrAccess;
 import com.haulmont.cuba.security.entity.EntityOp;
-import com.haulmont.cuba.security.entity.RoleType;
 import com.haulmont.cuba.security.role.*;
 import org.springframework.stereotype.Component;
 
@@ -128,12 +127,6 @@ public class AnnotatedPermissionsBuilder {
         Role annotation = getPredefinedRoleAnnotationNN(role);
 
         return annotation.description();
-    }
-
-    public RoleType getTypeFromAnnotation(RoleDefinition role) {
-        Role annotation = getPredefinedRoleAnnotationNN(role);
-
-        return annotation.type();
     }
 
     public boolean getIsDefaultFromAnnotation(RoleDefinition role) {

@@ -27,6 +27,7 @@ public class BasicRoleDefinition implements RoleDefinition, Serializable {
     private ScreenElementsPermissionsContainer screenElementsPermissions;
     private String name;
     private String description;
+    private String securityScope;
 
     private BasicRoleDefinition() {
         entityPermissions = new EntityPermissionsContainer();
@@ -44,6 +45,7 @@ public class BasicRoleDefinition implements RoleDefinition, Serializable {
         this.entityAttributePermissions = builder.entityAttributePermissions;
         this.specificPermissions = builder.specificPermissions;
         this.screenElementsPermissions = builder.screenElementsPermissions;
+        this.securityScope = builder.securityScope;
     }
 
     @Override
@@ -89,6 +91,15 @@ public class BasicRoleDefinition implements RoleDefinition, Serializable {
         this.description = description;
     }
 
+    @Override
+    public String getSecurityScope() {
+        return securityScope;
+    }
+
+    public void setSecurityScope(String securityScope) {
+        this.securityScope = securityScope;
+    }
+
     public static BasicRoleDefinitionBuilder builder() {
         return new BasicRoleDefinitionBuilder();
     }
@@ -97,6 +108,7 @@ public class BasicRoleDefinition implements RoleDefinition, Serializable {
 
         private String name;
         private String description;
+        private String securityScope;
         private EntityPermissionsContainer entityPermissions = new EntityPermissionsContainer();
         private EntityAttributePermissionsContainer entityAttributePermissions = new EntityAttributePermissionsContainer();
         private SpecificPermissionsContainer specificPermissions = new SpecificPermissionsContainer();
@@ -113,6 +125,11 @@ public class BasicRoleDefinition implements RoleDefinition, Serializable {
 
         public BasicRoleDefinitionBuilder withDescription(String description) {
             this.description = description;
+            return this;
+        }
+
+        public BasicRoleDefinitionBuilder withSecurityScope(String securityScope) {
+            this.securityScope = securityScope;
             return this;
         }
 

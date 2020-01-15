@@ -108,6 +108,7 @@ public class RolesRepository {
                 RoleDefinition roleDefinition = RoleDefinitionBuilder.create()
                         .withName(role.getName())
                         .withDescription(role.getDescription())
+                        .withSecurityScope(role.getSecurityScope())
                         .withPermissions(role.getPermissions())
                         .withDefaultScreenAccess(role.getDefaultScreenAccess())
                         .withDefaultEntityCreateAccess(role.getDefaultEntityCreateAccess())

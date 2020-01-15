@@ -17,7 +17,6 @@
 package com.haulmont.cuba.security.app.role.annotation;
 
 import com.haulmont.cuba.security.app.role.AnnotatedRoleDefinition;
-import com.haulmont.cuba.security.entity.RoleType;
 import com.haulmont.cuba.security.entity.SecurityScope;
 import com.haulmont.cuba.security.role.SecurityStorageMode;
 import org.springframework.core.annotation.AliasFor;
@@ -98,11 +97,6 @@ public @interface Role {
      * Description of the role.
      */
     String description() default "";
-
-    /**
-     * Role type. Default value: {@code RoleType.STANDARD}
-     */
-    RoleType type() default RoleType.STANDARD;
 
     @AliasFor(annotation = Component.class)
     String value() default "";
