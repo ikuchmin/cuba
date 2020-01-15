@@ -19,6 +19,7 @@ package com.haulmont.cuba.core.sys;
 
 import com.google.common.collect.Streams;
 import com.haulmont.chile.core.model.MetaClass;
+import com.haulmont.chile.core.model.MetaProperty;
 import com.haulmont.chile.core.model.MetaPropertyPath;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.global.*;
@@ -128,6 +129,19 @@ public class SecurityImpl implements Security {
         MetaClass originalMetaClass = extendedEntities.getOriginalMetaClass(metaClass);
         if (originalMetaClass != null) {
             metaClass = originalMetaClass;
+        }
+
+        if (propertyPath.length() > 1) {
+            boolean permittedAbove = true;
+            for (MetaProperty property : propertyPath.getMetaProperties()) {
+                if (!userSessionSource.getUserSession()
+                        .isEntityAttrPermitted(property.getDomain(), property.getName(), access)) {
+                    permittedAbove = false;
+                    break;
+                }
+            }
+            return permittedAbove && userSessionSource.getUserSession()
+                    .isEntityAttrPermitted(metaClass, propertyPath.getMetaProperty().getName(), access);
         }
 
         return userSessionSource.getUserSession()
