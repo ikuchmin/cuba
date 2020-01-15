@@ -34,8 +34,8 @@
 
     <layout expand="permissionsTabsheet" spacing="true">
         <scrollBox id="rolePropertiesScrollBox" spacing="true" orientation="horizontal" scrollBars="horizontal"
-                   width="100%" height="theme://cuba.gui.role-edit.generalGroupBox.height">
-            <groupBox id="roleGeneralGroupBox" spacing="true" caption="msg://general" width="AUTO" height="100%">
+                   width="100%" height="AUTO">
+            <groupBox id="roleGeneralGroupBox" spacing="true" caption="msg://general" stylename="light" width="AUTO" height="AUTO">
                 <grid id="roleNameGrid" spacing="true" width="AUTO">
                     <columns count="4"/>
                     <rows>
@@ -59,13 +59,13 @@
                             <label value="msg://com.haulmont.cuba.security.entity/Role.description" align="MIDDLE_LEFT"/>
                             <textArea id="description" datasource="roleDs" property="description"
                                       colspan="3"
-                                      rows="2"
+                                      rows="3"
                                       width="100%"/>
                         </row>
                     </rows>
                 </grid>
             </groupBox>
-            <groupBox id="defaultAccessBox" caption="msg://defaultPermissions" width="AUTO" height="100%">
+            <groupBox id="defaultAccessBox" caption="msg://defaultPermissions" stylename="light" width="AUTO" height="AUTO">
                 <grid id="defaultAccessGrid" spacing="true" width="AUTO">
                     <columns count="4"/>
                     <rows>
