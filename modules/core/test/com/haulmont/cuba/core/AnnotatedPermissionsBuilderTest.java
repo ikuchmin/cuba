@@ -29,14 +29,14 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 
 public class AnnotatedPermissionsBuilderTest {
 
     protected AnnotatedPermissionsBuilder builder;
     protected Metadata metadata;
     protected TestPredefinedRole role;
+    protected TestDefaultsRole defaultsRole;
 
     @ClassRule
     public static TestContainer cont = TestContainer.Common.INSTANCE;
@@ -46,6 +46,7 @@ public class AnnotatedPermissionsBuilderTest {
         builder = AppBeans.get(AnnotatedPermissionsBuilder.class);
         metadata = cont.metadata();
         role = new TestPredefinedRole();
+        defaultsRole = new TestDefaultsRole();
     }
 
     @Test
@@ -111,6 +112,24 @@ public class AnnotatedPermissionsBuilderTest {
                         PermissionsUtils.getScreenElementTarget("sec$Role.edit", "roleGroupBox")));
     }
 
+    @Test
+    public void testDefaultPermissionsBuilding() {
+        EntityPermissionsContainer entityPermissions = builder.buildEntityAccessPermissions(defaultsRole);
+        assertEquals(Access.ALLOW, entityPermissions.getDefaultEntityCreateAccess());
+        assertEquals(Access.ALLOW, entityPermissions.getDefaultEntityReadAccess());
+        assertEquals(Access.DENY, entityPermissions.getDefaultEntityUpdateAccess());
+        assertNull(entityPermissions.getDefaultEntityDeleteAccess());
+
+        ScreenPermissionsContainer screenPermissions = builder.buildScreenPermissions(defaultsRole);
+        assertEquals(Access.ALLOW, screenPermissions.getDefaultScreenAccess());
+
+        EntityAttributePermissionsContainer entityAttributeAccessPermissions = builder.buildEntityAttributeAccessPermissions(defaultsRole);
+        assertEquals(EntityAttrAccess.VIEW, entityAttributeAccessPermissions.getDefaultEntityAttributeAccess());
+
+        SpecificPermissionsContainer specificPermissions = builder.buildSpecificPermissions(defaultsRole);
+        assertEquals(Access.ALLOW, specificPermissions.getDefaultSpecificAccess());
+    }
+
     @Role(name = "TestPredefinedRole",
             isDefault = false,
             description = "Test role")
@@ -153,6 +172,46 @@ public class AnnotatedPermissionsBuilderTest {
         }
 
         @ScreenElementAccess(screen = "sec$Role.edit", allow = {"roleGroupBox"})
+        @Override
+        public ScreenElementsPermissionsContainer screenElementsPermissions() {
+            return null;
+        }
+    }
+
+    @Role(name = "TestDefaultsRole",
+            isDefault = false,
+            description = "Test defaults role")
+    protected class TestDefaultsRole implements RoleDefinition {
+
+        @Override
+        public String getName() {
+            return null;
+        }
+
+        @Override
+        @DefaultEntityAccess(allow = {EntityOp.CREATE, EntityOp.READ}, deny = {EntityOp.UPDATE})
+        public EntityPermissionsContainer entityPermissions() {
+            return null;
+        }
+
+        @Override
+        @DefaultEntityAttributeAccess(EntityAttrAccess.VIEW)
+        public EntityAttributePermissionsContainer entityAttributePermissions() {
+            return null;
+        }
+
+        @Override
+        @DefaultSpecificAccess(Access.ALLOW)
+        public SpecificPermissionsContainer specificPermissions() {
+            return null;
+        }
+
+        @Override
+        @DefaultScreenAccess(Access.ALLOW)
+        public ScreenPermissionsContainer screenPermissions() {
+            return null;
+        }
+
         @Override
         public ScreenElementsPermissionsContainer screenElementsPermissions() {
             return null;
