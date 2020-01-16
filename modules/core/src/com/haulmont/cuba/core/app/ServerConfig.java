@@ -356,7 +356,7 @@ public interface ServerConfig extends Config {
      *
      * By default, if permission value is not defined (neither explicitly nor using default value) then it is denied.
      */
-    @Property("cuba.permissions.undefinedAccessPolicy")
+    @Property("cuba.security.undefinedAccessPolicy")
     @Default("DENY")
     Access getPermissionUndefinedAccessPolicy();
 
@@ -364,7 +364,7 @@ public interface ServerConfig extends Config {
      * Whether the {@link com.haulmont.cuba.core.sys.DefaultPermissionValuesConfig} should be used when permissions are
      * calculated
      */
-    @Property("cuba.permissions.defaultPermissionValuesConfigEnabled")
+    @Property("cuba.security.defaultPermissionValuesConfigEnabled")
     @DefaultBoolean(false)
     boolean getDefaultPermissionValuesConfigEnabled();
 
