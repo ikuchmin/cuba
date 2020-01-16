@@ -55,7 +55,7 @@ public class UserSession implements Serializable {
     protected String clientInfo;
     protected boolean system;
 
-    protected RoleDefinition effectiveRole;
+    protected RoleDefinition joinedRole;
     protected Access permissionUndefinedAccessPolicy = Access.DENY;
     protected SetOfAccessConstraints setOfAccessConstraints;
 
@@ -87,7 +87,7 @@ public class UserSession implements Serializable {
         if (user.getTimeZone() != null)
             this.timeZone = TimeZone.getTimeZone(user.getTimeZone());
 
-        effectiveRole = RoleDefinitionBuilder.create().build();
+        joinedRole = RoleDefinitionBuilder.create().build();
 
         setOfAccessConstraints = new BasicSetOfAccessConstraints();
 
@@ -115,7 +115,7 @@ public class UserSession implements Serializable {
         roles = src.roles;
         locale = src.locale;
         timeZone = src.timeZone;
-        effectiveRole = src.effectiveRole;
+        joinedRole = src.joinedRole;
         setOfAccessConstraints = src.setOfAccessConstraints;
         attributes = src.attributes;
         localAttributes = src.localAttributes;
@@ -258,21 +258,21 @@ public class UserSession implements Serializable {
     /**
      * INTERNAL
      * <p>
-     * Adds a permission to the effective role. If the effective role already has a permissions that allows more than
+     * Adds a permission to the joined role. If the joined role already has a permissions that allows more than
      * the added permission, then the added permission is ignored.
      */
     public void addPermission(PermissionType type, String target, int value) {
         RoleDefinition roleWithNewPermission = RoleDefinitionBuilder.create()
                 .withPermission(type, target, value)
                 .build();
-        effectiveRole = RoleDefinitionsJoiner.join(effectiveRole, roleWithNewPermission);
+        joinedRole = RoleDefinitionsJoiner.join(joinedRole, roleWithNewPermission);
     }
 
     /**
      * INTERNAL
      */
     public Integer getPermissionValue(PermissionType type, String target) {
-        return PermissionsUtils.getEffectivePermissionValue(effectiveRole, type, target,
+        return PermissionsUtils.getResultingPermissionValue(joinedRole, type, target,
                 permissionUndefinedAccessPolicy);
     }
 
@@ -280,7 +280,7 @@ public class UserSession implements Serializable {
      * Get permissions by type
      */
     public Map<String, Integer> getPermissionsByType(PermissionType type) {
-        PermissionsContainer permissionsContainer = PermissionsUtils.getPermissionsByType(effectiveRole, type);
+        PermissionsContainer permissionsContainer = PermissionsUtils.getPermissionsByType(joinedRole, type);
         return Collections.unmodifiableMap(permissionsContainer.getExplicitPermissions());
     }
 
@@ -348,7 +348,7 @@ public class UserSession implements Serializable {
      * @return true if permitted, false otherwise
      */
     public boolean isPermitted(PermissionType type, String target, int value) {
-        Integer v = PermissionsUtils.getEffectivePermissionValue(effectiveRole, type, target,
+        Integer v = PermissionsUtils.getResultingPermissionValue(joinedRole, type, target,
                 permissionUndefinedAccessPolicy);
         return (v != null && v >= value);
     }
@@ -471,19 +471,19 @@ public class UserSession implements Serializable {
      * Returns an instance of {@link RoleDefinition} interface. It can be used to retrieve information about user permissions.
      * <p>
      * If you need to modify user permissions, use {@code RoleDefBuilder} to construct a suitable role and then
-     * apply it using {@link UserSession#setEffectiveRole} method.
+     * apply it using {@link UserSession#setJoinedRole} method.
      */
-    public RoleDefinition getEffectiveRole() {
-        return effectiveRole;
+    public RoleDefinition getJoinedRole() {
+        return joinedRole;
     }
 
     /**
-     * Sets {@code effectiveRole} to the UserSession. After that user will only have permissions defined in the specified role.
+     * Sets {@code joinedRole} to the UserSession. After that user will only have permissions defined in the specified role.
      * <p>
-     * Use {@code RoleDefBuilder} to construct a suitable role.
+     * Use {@code RoleDefinitionBuilder} to construct a suitable role.
      */
-    public void setEffectiveRole(RoleDefinition effectiveRole) {
-        this.effectiveRole = effectiveRole;
+    public void setJoinedRole(RoleDefinition joinedRole) {
+        this.joinedRole = joinedRole;
     }
 
     /**

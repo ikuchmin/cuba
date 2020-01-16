@@ -19,23 +19,23 @@ package com.haulmont.cuba.security.role;
 import com.haulmont.cuba.security.entity.User;
 
 /**
- * The service is used for getting "full" permissions containers. Full permissions container evaluates all implicit
- * permissions defined by roles default values and undefined permission policies and holds explicit permission value for
- * all permission targets.
+ * The service is used for getting effective permissions containers. Effective permissions container evaluates all
+ * implicit permissions defined by roles default values and undefined permission policies and holds explicit permission
+ * value for all permission targets.
  */
-public interface FullPermissionsService {
+public interface EffectivePermissionsService {
 
-    String NAME = "cuba_FullPermissionsService";
+    String NAME = "cuba_EffectivePermissionsService";
 
     /**
      * Method joins all roles assigned to the user and returns an {@link EntityPermissionsContainer} that contains
      * explicit permission values for all application entities.
      */
-    EntityPermissionsContainer getFullEntityPermissions(User user);
+    EntityPermissionsContainer getEffectiveEntityPermissions(User user);
 
     /**
      * Method joins all roles assigned to the user and returns an {@link EntityAttributePermissionsContainer} that
      * contains explicit permission values for all attributes of all entities.
      */
-    EntityAttributePermissionsContainer getFullEntityAttributePermissions(User user);
+    EntityAttributePermissionsContainer getEffectiveEntityAttributePermissions(User user);
 }

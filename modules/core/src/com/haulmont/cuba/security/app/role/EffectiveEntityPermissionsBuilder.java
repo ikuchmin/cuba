@@ -33,8 +33,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Component("cuba_FullEntityPermissionsBuilder")
-public class FullEntityPermissionsBuilder {
+@Component("cuba_EffectiveEntityPermissionsBuilder")
+public class EffectiveEntityPermissionsBuilder {
 
     @Inject
     protected Metadata metadata;
@@ -42,19 +42,19 @@ public class FullEntityPermissionsBuilder {
     @Inject
     protected ServerConfig serverConfig;
 
-    public EntityPermissionsContainer buildFullPermissionContainer(EntityPermissionsContainer srcPermissionsContainer) {
+    public EntityPermissionsContainer buildEffectivePermissionContainer(EntityPermissionsContainer srcPermissionsContainer) {
         Map<String, Integer> srcExplicitPermissions = srcPermissionsContainer.getExplicitPermissions();
         List<EntityOpDefault> entityOpDefaults = createEntityOpDefaultsList(srcPermissionsContainer);
-        EntityPermissionsContainer fullPermissionsContainer = new EntityPermissionsContainer();
-        Map<String, Integer> fullExplicitPermissions = fullPermissionsContainer.getExplicitPermissions();
+        EntityPermissionsContainer effectivePermissionsContainer = new EntityPermissionsContainer();
+        Map<String, Integer> effectiveExplicitPermissions = effectivePermissionsContainer.getExplicitPermissions();
         for (MetaClass metaClass : getAllMetaClasses()) {
             for (EntityOpDefault entityOpDefault : entityOpDefaults) {
                 String target = PermissionsUtils.getEntityOperationTarget(metaClass, entityOpDefault.getEntityOp());
                 Integer value = srcExplicitPermissions.get(target);
-                fullExplicitPermissions.put(target, value != null ? value : entityOpDefault.getDefaultValue());
+                effectiveExplicitPermissions.put(target, value != null ? value : entityOpDefault.getDefaultValue());
             }
         }
-        return fullPermissionsContainer;
+        return effectivePermissionsContainer;
     }
 
     protected List<EntityOpDefault> createEntityOpDefaultsList(EntityPermissionsContainer srcPermissionsContainer) {

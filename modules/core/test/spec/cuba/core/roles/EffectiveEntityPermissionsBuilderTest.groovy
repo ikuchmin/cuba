@@ -20,7 +20,7 @@ import com.haulmont.chile.core.model.MetaClass
 import com.haulmont.cuba.core.global.AppBeans
 import com.haulmont.cuba.core.global.Metadata
 import com.haulmont.cuba.security.app.RoleDefinitionBuilder
-import com.haulmont.cuba.security.app.role.FullEntityPermissionsBuilder
+import com.haulmont.cuba.security.app.role.EffectiveEntityPermissionsBuilder
 import com.haulmont.cuba.security.entity.Access
 import com.haulmont.cuba.security.entity.EntityOp
 import com.haulmont.cuba.security.entity.Role
@@ -31,17 +31,17 @@ import org.junit.ClassRule
 import spock.lang.Shared
 import spock.lang.Specification
 
-class FullEntityPermissionsBuilderTest extends Specification {
+class EffectiveEntityPermissionsBuilderTest extends Specification {
 
     @Shared
     @ClassRule
     public TestContainer cont = TestContainer.Common.INSTANCE
 
     Metadata metadata
-    FullEntityPermissionsBuilder fullEnityPermissionsBuilder
+    EffectiveEntityPermissionsBuilder effectiveEntityPermissionsBuilder
 
     def setup() {
-        fullEnityPermissionsBuilder = AppBeans.get(FullEntityPermissionsBuilder)
+        effectiveEntityPermissionsBuilder = AppBeans.get(EffectiveEntityPermissionsBuilder)
         metadata = cont.metadata()
     }
 
@@ -57,7 +57,7 @@ class FullEntityPermissionsBuilderTest extends Specification {
 
         when:
 
-        def fullEntityPermissionsContainer = fullEnityPermissionsBuilder.buildFullPermissionContainer(roleDefinition.entityPermissions())
+        def fullEntityPermissionsContainer = effectiveEntityPermissionsBuilder.buildEffectivePermissionContainer(roleDefinition.entityPermissions())
         def fullEntityPermissionsMap = fullEntityPermissionsContainer.explicitPermissions
 
         then:

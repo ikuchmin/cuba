@@ -29,7 +29,6 @@ import com.haulmont.cuba.gui.screen.OpenMode
 import com.haulmont.cuba.security.app.SecurityScopesService
 import com.haulmont.cuba.security.entity.EntityOp
 import com.haulmont.cuba.security.entity.Group
-import com.haulmont.cuba.security.entity.PermissionType
 import com.haulmont.cuba.security.entity.User
 import com.haulmont.cuba.web.testsupport.proxy.TestServiceProxy
 import spec.cuba.web.UiScreenSpec
@@ -64,7 +63,7 @@ class UserEditorTest extends UiScreenSpec {
     }
 
     void cleanup() {
-        sessionSource.session.effectiveRole.entityPermissions().explicitPermissions.clear()
+        sessionSource.session.joinedRole.entityPermissions().explicitPermissions.clear()
     }
 
     def "open UserEditor"() {
@@ -105,9 +104,9 @@ class UserEditorTest extends UiScreenSpec {
 
         def userMetaClass = metadata.getClass(User).name
 
-        session.effectiveRole.entityPermissions()
+        session.joinedRole.entityPermissions()
                 .explicitPermissions[userMetaClass + ":" + EntityOp.CREATE.id] = PermissionValue.DENY.value
-        session.effectiveRole.entityPermissions()
+        session.joinedRole.entityPermissions()
                 .explicitPermissions[userMetaClass + ":" + EntityOp.UPDATE.id] = PermissionValue.DENY.value
 
         when:
@@ -140,7 +139,7 @@ class UserEditorTest extends UiScreenSpec {
         def session = sessionSource.session
 
         def userMetaClass = metadata.getClass(User).name
-        session.effectiveRole.entityPermissions()
+        session.joinedRole.entityPermissions()
                 .explicitPermissions[userMetaClass + ":" + EntityOp.READ.id] = PermissionValue.DENY.value
 
         when:

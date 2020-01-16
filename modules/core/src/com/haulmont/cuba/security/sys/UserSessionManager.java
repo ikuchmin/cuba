@@ -193,10 +193,10 @@ public class UserSessionManager {
     }
 
     protected void compilePermissions(UserSession session, List<RoleDefinition> roles) {
-        session.setEffectiveRole(buildEffectiveRoleDefinition(roles));
+        session.setJoinedRole(buildJoinedRoleDefinition(roles));
     }
 
-    protected RoleDefinition buildEffectiveRoleDefinition(List<RoleDefinition> roles) {
+    protected RoleDefinition buildJoinedRoleDefinition(List<RoleDefinition> roles) {
         RoleDefinition effectiveRole = RoleDefinitionBuilder.create().build();
         for (RoleDefinition role : roles) {
             effectiveRole = RoleDefinitionsJoiner.join(effectiveRole, role);
@@ -299,8 +299,8 @@ public class UserSessionManager {
                     roles.add(role);
                 }
             }
-            RoleDefinition effectiveRole = buildEffectiveRoleDefinition(roles);
-            result = PermissionsUtils.getEffectivePermissionValue(effectiveRole, permissionType, target,
+            RoleDefinition joinedRole = buildJoinedRoleDefinition(roles);
+            result = PermissionsUtils.getResultingPermissionValue(joinedRole, permissionType, target,
                     serverConfig.getPermissionUndefinedAccessPolicy());
             tx.commit();
         } finally {

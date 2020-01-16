@@ -33,8 +33,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Component("cuba_FullEntityAttributePermissionsBuilder")
-public class FullEntityAttributePermissionsBuilder {
+@Component("cuba_EffectiveEntityAttributePermissionsBuilder")
+public class EffectiveEntityAttributePermissionsBuilder {
 
     @Inject
     protected Metadata metadata;
@@ -42,7 +42,7 @@ public class FullEntityAttributePermissionsBuilder {
     @Inject
     protected ServerConfig serverConfig;
 
-    public EntityAttributePermissionsContainer buildFullPermissionContainer(EntityAttributePermissionsContainer container) {
+    public EntityAttributePermissionsContainer buildEffectivePermissionContainer(EntityAttributePermissionsContainer container) {
         Integer undefinedPermissionValue = serverConfig.getPermissionUndefinedAccessPolicy() == Access.ALLOW ?
                 EntityAttrAccess.MODIFY.getId() :
                 EntityAttrAccess.DENY.getId();
@@ -52,16 +52,16 @@ public class FullEntityAttributePermissionsBuilder {
                 undefinedPermissionValue;
 
         Map<String, Integer> srcExplicitPermissions = container.getExplicitPermissions();
-        EntityAttributePermissionsContainer fullPermissionsContainer = new EntityAttributePermissionsContainer();
-        Map<String, Integer> fullExplicitPermissions = fullPermissionsContainer.getExplicitPermissions();
+        EntityAttributePermissionsContainer effectivePermissionsContainer = new EntityAttributePermissionsContainer();
+        Map<String, Integer> effectiveExplicitPermissions = effectivePermissionsContainer.getExplicitPermissions();
         for (MetaClass metaClass : getAllMetaClasses()) {
             for (MetaProperty metaProperty : metaClass.getProperties()) {
                 String target = PermissionsUtils.getEntityAttributeTarget(metaClass, metaProperty.getName());
                 Integer value = srcExplicitPermissions.get(target);
-                fullExplicitPermissions.put(target, value != null ? value : defaultPermissionValue);
+                effectiveExplicitPermissions.put(target, value != null ? value : defaultPermissionValue);
             }
         }
-        return fullPermissionsContainer;
+        return effectivePermissionsContainer;
     }
 
     protected List<MetaClass> getAllMetaClasses() {

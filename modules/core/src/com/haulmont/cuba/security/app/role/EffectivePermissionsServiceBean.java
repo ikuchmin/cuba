@@ -29,14 +29,14 @@ import javax.inject.Inject;
 import java.util.Collection;
 import java.util.List;
 
-@Service(FullPermissionsService.NAME)
-public class FullPermissionsServiceBean implements FullPermissionsService {
+@Service(EffectivePermissionsService.NAME)
+public class EffectivePermissionsServiceBean implements EffectivePermissionsService {
 
     @Inject
-    protected FullEntityPermissionsBuilder fullEntityPermissionsBuilder;
+    protected EffectiveEntityPermissionsBuilder effectiveEntityPermissionsBuilder;
 
     @Inject
-    protected FullEntityAttributePermissionsBuilder fullEntityAttributePermissionsBuilder;
+    protected EffectiveEntityAttributePermissionsBuilder effectiveEntityAttributePermissionsBuilder;
 
     @Inject
     protected DataManager dataManager;
@@ -45,15 +45,15 @@ public class FullPermissionsServiceBean implements FullPermissionsService {
     protected RolesService rolesService;
 
     @Override
-    public EntityPermissionsContainer getFullEntityPermissions(User user) {
+    public EntityPermissionsContainer getEffectiveEntityPermissions(User user) {
         RoleDefinition effectiveRole = evaluateEffectiveRole(user);
-        return fullEntityPermissionsBuilder.buildFullPermissionContainer(effectiveRole.entityPermissions());
+        return effectiveEntityPermissionsBuilder.buildEffectivePermissionContainer(effectiveRole.entityPermissions());
     }
 
     @Override
-    public EntityAttributePermissionsContainer getFullEntityAttributePermissions(User user) {
+    public EntityAttributePermissionsContainer getEffectiveEntityAttributePermissions(User user) {
         RoleDefinition effectiveRole = evaluateEffectiveRole(user);
-        return fullEntityAttributePermissionsBuilder.buildFullPermissionContainer(effectiveRole.entityAttributePermissions());
+        return effectiveEntityAttributePermissionsBuilder.buildEffectivePermissionContainer(effectiveRole.entityAttributePermissions());
     }
 
     protected RoleDefinition evaluateEffectiveRole(User user) {

@@ -52,7 +52,7 @@ public class TestUserSessionSource extends AbstractUserSessionSource {
         User user = createTestUser();
 
         UserSession userSession = new UserSession(UUID.randomUUID(), user, Collections.emptyList(), Locale.ENGLISH, false);
-        userSession.setEffectiveRole(new TestFullAccessRole());
+        userSession.setJoinedRole(new TestFullAccessRole());
         return userSession;
     }
 

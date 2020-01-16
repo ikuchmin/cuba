@@ -56,7 +56,7 @@ public class TestUserSessionSource extends AbstractUserSessionSource {
             user.setPassword(DigestUtils.md5Hex("test_admin"));
 
             session = new UserSession(UUID.randomUUID(), user, Collections.emptyList(), Locale.forLanguageTag("en"), false);
-            session.setEffectiveRole(new TestFullAccessRole());
+            session.setJoinedRole(new TestFullAccessRole());
         }
         return session;
     }

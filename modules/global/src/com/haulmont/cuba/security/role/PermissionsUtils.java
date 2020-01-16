@@ -76,7 +76,7 @@ public final class PermissionsUtils {
     }
 
     /**
-     * Method returns an "effective" permission value, trying to find a value in the following order:
+     * Method returns a resulting permission value, trying to find a value in the following order:
      * <ul>
      *     <li>explicit permission value in the role definition</li>
      *     <li>default permission value in the role definition</li>
@@ -85,7 +85,7 @@ public final class PermissionsUtils {
      *
      * @return an integer that represents a permission value
      */
-    public static Integer getEffectivePermissionValue(RoleDefinition roleDefinition,
+    public static Integer getResultingPermissionValue(RoleDefinition roleDefinition,
                                                       PermissionType type,
                                                       String target,
                                                       Access permissionUndefinedAccessPolicy) {
