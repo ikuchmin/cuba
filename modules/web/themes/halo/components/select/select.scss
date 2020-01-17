@@ -43,6 +43,10 @@
     }
   }
 
+  .#{$primary-stylename}.v-readonly [class*="input"]:focus {
+    border-color: $v-focus-color;
+  }
+
   .#{$primary-stylename}.c-disabled-or-readonly.c-empty-value {
       input {
         color: transparent;
