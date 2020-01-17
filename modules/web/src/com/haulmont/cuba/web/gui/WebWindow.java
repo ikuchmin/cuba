@@ -525,6 +525,12 @@ public abstract class WebWindow implements Window, Component.Wrapper, Component.
     @Override
     public void setFrameOwner(Screen controller) {
         this.frameOwner = controller;
+
+        controller.addAfterShowListener(afterShowEvent -> refreshActionsState());
+    }
+
+    protected void refreshActionsState() {
+        getActions().forEach(Action::refreshState);
     }
 
     @Override

@@ -314,6 +314,12 @@ public class WebFragment extends WebVBoxLayout implements Fragment, FragmentImpl
     @Override
     public void setFrameOwner(ScreenFragment controller) {
         this.frameOwner = controller;
+
+        controller.addAfterInitListener(afterInitEvent -> refreshActionsState());
+    }
+
+    protected void refreshActionsState() {
+        getActions().forEach(Action::refreshState);
     }
 
     @Override

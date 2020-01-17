@@ -194,7 +194,7 @@ public abstract class ScreenFragment implements FrameOwner {
      * @param listener listener
      * @return subscription
      */
-    protected Subscription addAfterInitListener(Consumer<AfterInitEvent> listener) {
+    public Subscription addAfterInitListener(Consumer<AfterInitEvent> listener) {
         return eventHub.subscribe(AfterInitEvent.class, listener);
     }
 
