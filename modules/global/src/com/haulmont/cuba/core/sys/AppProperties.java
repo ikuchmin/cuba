@@ -50,8 +50,8 @@ public class AppProperties {
         DEPRECATED_PROPERTIES.put("cuba.entityLog.enabled", "cuba.security.EntityLog.enabled"); // 6.1
         DEPRECATED_PROPERTIES.put("cuba.cluster.messageSendingThreadPoolSize", "cuba.clusterMessageSendingThreadPoolSize"); // 6.1
         DEPRECATED_PROPERTIES.put("reporting.entityTreeModelMaxDepth", "cuba.reporting.entityTreeModelMaxDeep"); // 6.1
-        DEPRECATED_PROPERTIES.put("reporting.officePath.docx.useOfficeForDocumentConversion", "reporting.openoffice.docx.useOfficeForDocumentConversion");
-        DEPRECATED_PROPERTIES.put("reporting.officePath.docx.useOfficeForDocumentConversion", "reporting.openoffice.docx.useOfficeForPdfConversion"); // 6.7
+        DEPRECATED_PROPERTIES.put("reporting.office.docx.useOfficeForDocumentConversion", "reporting.openoffice.docx.useOfficeForDocumentConversion");
+        DEPRECATED_PROPERTIES.put("reporting.office.docx.useOfficeForDocumentConversion", "reporting.openoffice.docx.useOfficeForPdfConversion"); // 6.7
         DEPRECATED_PROPERTIES.put("cuba.maxUploadSizeMb", "cuba.client.maxUploadSizeMb"); // 6.1
         DEPRECATED_PROPERTIES.put("cuba.gui.systemInfoScriptsEnabled", "cuba.systemInfoScriptsEnabled"); // 6.1
         DEPRECATED_PROPERTIES.put("cuba.gui.manualScreenSettingsSaving", "cuba.manualScreenSettingsSaving"); // 6.1
@@ -61,7 +61,7 @@ public class AppProperties {
         DEPRECATED_PROPERTIES.put("cuba.gui.tableShortcut.remove", "cuba.gui.tableRemoveShortcut"); // 6.1
         DEPRECATED_PROPERTIES.put("cuba.gui.tableShortcut.edit", "cuba.gui.tableEditShortcut"); // 6.1
         DEPRECATED_PROPERTIES.put("reporting.parameterPrototypeQueryLimit", "reporting.parameterPrototype.queryLimit"); // 6.1
-        DEPRECATED_PROPERTIES.put("reporting.officePath.*", "reporting.openoffice.*"); // 6.1
+        DEPRECATED_PROPERTIES.put("reporting.office.*", "reporting.openoffice.*"); // 6.1
         DEPRECATED_PROPERTIES.put("reporting.*", "cuba.reporting.*"); // 6.1
         DEPRECATED_PROPERTIES.put("fts.*", "cuba.fts.*"); // 6.1
         DEPRECATED_PROPERTIES.put("charts.*", "cuba.charts.*"); // 6.1
