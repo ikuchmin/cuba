@@ -20,7 +20,16 @@
     @include box-defaults;
   }
 
+  .#{$primary-stylename}:focus {
+    outline: 0;
+    transition: none;
+    box-shadow: none;
+    border-color: $v-focus-color;
+  }
+
   .#{$primary-stylename}.v-readonly {
+    @include valo-textfield-readonly-style;
+
     overflow: auto;
   }
 
